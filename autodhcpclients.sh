@@ -12,7 +12,7 @@ if [ -e /tmp/nmap.hosts ]
 then
 echo "Nmap ya hecho"
 else
-nmap -sP $xarxa.0/24 > /tmp/nmap.hosts
+nmap -sP $xarxa0/24 > /tmp/nmap.hosts
 cat /tmp/nmap.hosts | egrep -o '('$xarxa'[0-9]+|([0-9A-F]{2}:){5}[0-9A-F]{2})' > /tmp/ipmac.hosts
 fi
 
