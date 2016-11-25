@@ -1,3 +1,35 @@
+body{
+font-family:'Sans';
+
+}
+
+#clients ul{
+width: 500px;
+
+}
+
+#clients ul li{
+background-color: #9D9;
+display:block;
+border:1px solid #999;
+margin:2px;
+}
+
+#clients ul li span{
+padding: 2px;
+}
+
+#clients ul li img{
+width:19px;
+height:auto;
+float: right;
+}
+
+#clients ul li.off {
+background-color: #d77;
+
+}
+
 #actual{
 font-size:8px;
 
