@@ -36,6 +36,16 @@ function f_pcs(){
 
 
 $("#panel ul li").each(function(i){
-$(this).append('<img alt="Bloquea esta IP" src="images/connected.png"/>');
+ip=$(this).attr('id');
+console.log(ip);
+if(/^c192.168.[0-9]+.25[0-4]/.test(ip)){
+$(this).addClass('servers');
+} 
+else {
+
+$(this).append('<img title="Bloquear esta IP" id="b'+ip+'" alt="Bloquea esta IP" src="images/connected.png"/>');
+
+if(/^c192.168.[0-9]+.[0-9]{1,2}$/.test(ip)){$(this).addClass('desconeguts');}
+}
 });
 }

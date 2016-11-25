@@ -25,10 +25,9 @@ height:auto;
 float: right;
 }
 
-#clients ul li.off {
-background-color: #d77;
-
-}
+#clients ul li.off {background-color: #d77;}
+#clients ul li.desconeguts {background-color: #dd7;}
+#clients ul li.servers {background-color: #111; color:#eee;}
 
 #actual{
 font-size:8px;
