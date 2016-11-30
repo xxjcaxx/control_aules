@@ -27,8 +27,20 @@ $(function()
 					//console.log($("#panel ul li"));
 					//$("#panel ul li").css('color','red');
 					f_pcs();
-					});
+					}).done(function(){ // Ja tinc tot fet, passe a donar format js a algunes coses
+                                        $("#actual pre").hide();
+					$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
+
+                                                
+                                        });
+
 		});
+                 // mestres se carrega tot, podem anar donant funcionalitat als botons:
+                $("#btots").on("click",function(event){bloquear('btots');});
+                $("#dtots").on("click",function(event){bloquear('dtots');});
+                $("#ralentir").on("click",function(event){});
+                $("#reset").on("click",function(event){});
+               
 
 		});
 
@@ -52,6 +64,8 @@ function f_pcs(){
 
 			$(this).append($block);
 			$block.on("click",function(event){ 
+                                var scroll = $(window).scrollTop();
+
 				if(!$(this).parent().hasClass('off')){
 					bloquear(ip.substring(1));
 					$(this).parent().addClass('off');
@@ -66,9 +80,10 @@ function f_pcs(){
 				$.get('iptables.php',function(data){
 				$("#actual").append("<span>resultat de IPtables:</span>");
 				$("#actual").append(data);
+                                        $("#actual pre").hide();
+					$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
 				});  },1000);
-
-
+                                $("html").scrollTop(scroll);
 			});
 
 			}

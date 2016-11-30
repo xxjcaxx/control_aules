@@ -1,18 +1,38 @@
 body{
-font-family:'Sans';
+font-family:'mono';
+background-color:#ECECEA;
+padding: 10px;
+}
 
+h1 { margin:0px; padding-left:20px; color:#558C89;}
+
+#panel{
+padding:10px;
+margin:10px;
+border-radius: 5px;
+background-color:#DBFFFD;
+float:left;
+}
+
+
+#clients {
+width: 550px;
 }
 
 #clients ul{
 width: 500px;
+padding:0px;
+}
 
+#clients button{
 }
 
 #clients ul li{
-background-color: #9D9;
+background-color: #56E39F;
 display:block;
-border:1px solid #999;
+border-radius: 5px;
 margin:2px;
+padding: 0px 10px 0px 10px;
 }
 
 #clients ul li span{
@@ -25,12 +45,48 @@ height:auto;
 float: right;
 }
 
-#clients ul li.off {background-color: #d77;}
-#clients ul li.desconeguts {background-color: #dd7;}
-#clients ul li.servers {background-color: #111; color:#eee;}
+#clients ul li.desconeguts {background-color: #FFBC72;}
+#clients ul li.off {background-color: #DB504A;}
+
+#clients ul li.servers {background-color: #2B2B2B; color:#eee;}
 #clients ul li.profe {background-color: #9cf;}
 
 #actual{
 font-size:8px;
+clear:both;
+padding:10px;
+margin:10px;
+border-radius: 5px;
+background-color:#DBFFFD;
+}
+
+
+#actual span{
+font-size:10px;
+background-color: #2c2c2c;
+display:block;
+border-radius: 5px;
+color:#eee;
+margin:2px;
+padding: 0px 10px 0px 10px;
+width: 300px;
+
 
 }
+
+#accions{
+padding:10px;
+margin:10px;
+border-radius: 5px;
+background-color:#DBFFFD;
+float:left;
+}
+
+#accions span.accio{
+background-color: #2c2c2c;
+display:block;
+border-radius: 5px;
+color:#eee;
+margin:2px;
+padding: 0px 10px 0px 10px;
+} 
