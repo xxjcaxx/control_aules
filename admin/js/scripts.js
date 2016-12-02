@@ -38,8 +38,8 @@ $(function()
                  // mestres se carrega tot, podem anar donant funcionalitat als botons:
                 $("#btots").on("click",function(event){bloquear('btots');});
                 $("#dtots").on("click",function(event){bloquear('dtots');});
-                $("#ralentir").on("click",function(event){});
-                $("#reset").on("click",function(event){});
+                $("#ralentir").on("click",function(event){slow();});
+                $("#reset").on("click",function(event){reset();});
                
 
 		});
@@ -98,4 +98,11 @@ function desbloquear(ip){
 	$.get('bloquear.php',{ipd:ip},function(data){}).done(function(){console.log('desbloqueado '+ip)});
 	} 
 
+function slow(){
 
+	$.get('slow.php',function(data){}).done(function(){console.log('Lent')});
+}
+function reset(){
+
+	$.get('reset.php',function(data){}).done(function(){console.log('Reset')});
+}

@@ -1,3 +1,4 @@
+sudo chmod 666 clients.html
 > alumnes
 xarxa=$(ifconfig | grep -o '192.168.[0-9]*.254' | cut -d'.' -f1-3)
 
