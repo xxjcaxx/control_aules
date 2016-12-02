@@ -101,8 +101,12 @@ function desbloquear(ip){
 function slow(){
 
 	$.get('slow.php',function(data){}).done(function(){console.log('Lent')});
+        $("#panel ul li").each(function(i){
+$(this).prepend('<img src="images/turtle.png" title="Ralentizat" />');
+});
 }
 function reset(){
 
 	$.get('reset.php',function(data){}).done(function(){console.log('Reset')});
+
 }
