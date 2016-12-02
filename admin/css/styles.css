@@ -1,22 +1,32 @@
 body{
 font-family:'mono';
-background-color:#ECECEA;
+background-color:#EDEDED;
 padding: 10px;
 }
 
-h1 { margin:0px; padding-left:20px; color:#558C89;}
+h1 { 
+font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+margin:0px; padding-left:20px; color:#73879c;}
 
 #panel{
-padding:10px;
+padding:30px;
 margin:10px;
-border-radius: 5px;
-background-color:#DBFFFD;
+background-color:#FFF;
 float:left;
+border:1px solid #e6e9ed;
+}
+
+#panel>span{
+font-size:24px;
+color:#73879c;
+font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+display:block;
+border-bottom:2px solid #e6e9ed;
 }
 
 
 #clients {
-width: 550px;
+/*width: 550px;*/
 }
 
 #clients ul{
@@ -28,9 +38,9 @@ padding:0px;
 }
 
 #clients ul li{
-background-color: #56E39F;
+background-color: #1ABC9C;
 display:block;
-border-radius: 5px;
+/*border-radius: 5px;*/
 margin:2px;
 padding: 0px 10px 0px 10px;
 }
@@ -45,19 +55,19 @@ height:auto;
 float: right;
 }
 
-#clients ul li.desconeguts {background-color: #FFBC72;}
-#clients ul li.off {background-color: #DB504A;}
+#clients ul li.desconeguts {background-color: #9CC2CB;}
+#clients ul li.off {background-color: #E74C3C;}
 
 #clients ul li.servers {background-color: #2B2B2B; color:#eee;}
-#clients ul li.profe {background-color: #9cf;}
+#clients ul li.profe {background-color: #3498DB;}
 
 #actual{
 font-size:8px;
 clear:both;
 padding:10px;
 margin:10px;
-border-radius: 5px;
 background-color:#DBFFFD;
+border:1px solid #e6e9ed;
 }
 
 
@@ -65,7 +75,6 @@ background-color:#DBFFFD;
 font-size:10px;
 background-color: #2c2c2c;
 display:block;
-border-radius: 5px;
 color:#eee;
 margin:2px;
 padding: 0px 10px 0px 10px;
@@ -75,18 +84,21 @@ width: 300px;
 }
 
 #accions{
-padding:10px;
+padding:0px;
 margin:10px;
-border-radius: 5px;
-background-color:#DBFFFD;
+background-color:#FFF;
 float:left;
+border:1px solid #e6e9ed;
 }
 
 #accions span.accio{
-background-color: #2c2c2c;
+background-color: #2A3F54;
 display:block;
-border-radius: 5px;
 color:#eee;
-margin:2px;
 padding: 0px 10px 0px 10px;
+border-bottom:1px solid #1F2F3F;
+border-top:1px solid #536271;
+font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
 } 
+
+/*https://colorlib.com/polygon/gentelella/index.html*/
