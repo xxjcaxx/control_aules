@@ -1,19 +1,26 @@
 body{
 font-family:'mono';
 background-color:#EDEDED;
-padding: 10px;
+padding:0px;
+margin:0px;
 }
 
 h1 { 
 font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
-margin:0px; padding-left:20px; color:#73879c;}
+margin:10px 0 10px 0; padding-left:10px; color:#EDEDED;}
+
+#contenedor{
+float:left;
+overflow:hidden;
+
+}
 
 #panel{
 padding:30px;
-margin:10px;
 background-color:#FFF;
 float:left;
 border:1px solid #e6e9ed;
+margin:30px;
 }
 
 #panel>span{
@@ -65,8 +72,7 @@ float: right;
 font-size:8px;
 clear:both;
 padding:10px;
-margin:10px;
-background-color:#DBFFFD;
+background-color:#F7F7F7;
 border:1px solid #e6e9ed;
 }
 
@@ -85,10 +91,12 @@ width: 300px;
 
 #accions{
 padding:0px;
-margin:10px;
-background-color:#FFF;
+background-color: #2A3F54;
 float:left;
 border:1px solid #e6e9ed;
+margin-bottom:-1000px;
+padding-bottom:1000px;
+width:225px;
 }
 
 #accions span.accio{
@@ -96,9 +104,18 @@ background-color: #2A3F54;
 display:block;
 color:#eee;
 padding: 0px 10px 0px 10px;
+font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+font-size:12px;
+border-bottom:1px solid #2A3F54;
+border-top:1px solid #2A3F54;
+} 
+#accions span.accio:hover{
 border-bottom:1px solid #1F2F3F;
 border-top:1px solid #536271;
-font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
 } 
 
-/*https://colorlib.com/polygon/gentelella/index.html*/
+
+
+/*https://colorlib.com/polygon/gentelella/index.html
+http://www.ejeliot.com/samples/equal-height-columns/example-6.html
+*/

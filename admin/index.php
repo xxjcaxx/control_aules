@@ -15,14 +15,16 @@
 
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="js/scripts.js"></script>
-<h1>Control d'Aula</h1>
-<div id="panel"> </div>
+<div id="contenedor">
 	<div id="accions">
+<h1>Control d'Aula</h1>
 	<span class="accio" id="btots">Bloquejar a tots</span>
 	<span class="accio" id="dtots">Desbloquejar a tots</span>
 	<span class="accio" id="ralentir">Ralentir Internet als alumnes</span>
 	<span class="accio" id="reset">Velocitat estandard per a tots</span>
 	</div>
+<div id="panel"> </div>
+</div>
 <div id="actual"></div>
 </body>
 </html>
