@@ -10,9 +10,8 @@ font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
 margin:10px 0 10px 0; padding-left:10px; color:#EDEDED;}
 
 #contenedor{
-float:left;
+display:flex;
 overflow:hidden;
-
 }
 
 #panel{
@@ -20,7 +19,6 @@ padding:30px;
 background-color:#FFF;
 float:left;
 border:1px solid #e6e9ed;
-margin:30px;
 }
 
 #panel>span{
@@ -60,6 +58,7 @@ padding: 2px;
 width:19px;
 height:auto;
 float: right;
+cursor: pointer;
 }
 
 #clients ul li.desconeguts {background-color: #9CC2CB;}
@@ -86,6 +85,7 @@ margin:2px;
 padding: 0px 10px 0px 10px;
 width: 300px;
 
+cursor: pointer;
 
 }
 
@@ -108,13 +108,37 @@ font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
 font-size:12px;
 border-bottom:1px solid #2A3F54;
 border-top:1px solid #2A3F54;
+cursor: pointer;
 } 
 #accions span.accio:hover{
 border-bottom:1px solid #1F2F3F;
 border-top:1px solid #536271;
 } 
+#derecha{
+flex:1 ;
+padding:30px;
+}
+#net {
+background-color:#FFF;
+border:1px solid #e6e9ed;
+margin-bottom:30px;
+padding:30px;
+}
+#net div.nic{
+display:block;
+float:left;
+height:50px;
+}
 
+#net span.nic{
+display:block;
+float:left;
+height:50px;
+}
 
+svg.peity{
+margin:0 10px 0 10px;
+}
 
 /*https://colorlib.com/polygon/gentelella/index.html
 http://www.ejeliot.com/samples/equal-height-columns/example-6.html

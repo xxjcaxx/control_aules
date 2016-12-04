@@ -40,7 +40,9 @@ $(function()
                 $("#dtots").on("click",function(event){bloquear('dtots');});
                 $("#ralentir").on("click",function(event){slow();});
                 $("#reset").on("click",function(event){reset();});
-               
+
+		$(".line").peity("line",{'height':'50px','width':'400px'});
+                // http://benpickles.github.io/peity/#pie-charts
 
 		});
 
