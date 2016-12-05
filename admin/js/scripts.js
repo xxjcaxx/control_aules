@@ -33,6 +33,8 @@ $(function()
 
                                                 
                                         });
+                                  
+ 
 
 		});
                  // mestres se carrega tot, podem anar donant funcionalitat als botons:
@@ -41,7 +43,8 @@ $(function()
                 $("#ralentir").on("click",function(event){slow();});
                 $("#reset").on("click",function(event){reset();});
 
-		$(".line").peity("line",{'height':'50px','width':'400px'});
+		grafics = $(".line").peity("line",{'height':'50px','width':'200px'});
+		updaten();
                 // http://benpickles.github.io/peity/#pie-charts
 
 		});
@@ -111,4 +114,23 @@ function reset(){
 
 	$.get('reset.php',function(data){}).done(function(){console.log('Reset')});
 
+}
+
+function updaten() {
+	  $.get("xarxa.php",{q:'in'}, function(data) {
+		      $("#eth0in span.line").html(data);
+                     // console.log( $("#eth0in span.line").html(data));
+		     // console.log(data);
+                      grafics.change();
+
+		          window.setTimeout(updaten, 10000);
+		      });
+	  $.get("xarxa.php",{q:'out'}, function(data) {
+		      $("#eth0out span.line").html(data);
+                     // console.log( $("#eth0in span.line").html(data));
+		     // console.log(data);
+                      grafics.change();
+
+		          window.setTimeout(updaten, 10000);
+		      });
 }
