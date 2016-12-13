@@ -105,14 +105,17 @@ function desbloquear(ip){
 
 function slow(){
 
+ if($('.turtle').length == 0) {
 	$.get('slow.php',function(data){}).done(function(){console.log('Lent')});
         $("#panel ul li").each(function(i){
-$(this).prepend('<img src="images/turtle.png" title="Ralentizat" />');
-});
+	$(this).prepend('<img class="turtle" src="images/turtle.png" title="Ralentizat" />');
+	
+	});
+	}
 }
 function reset(){
-
-	$.get('reset.php',function(data){}).done(function(){console.log('Reset')});
+       
+	$.get('reset.php',function(data){}).done(function(){console.log('Reset'); $('.turtle').each(function(i){$(this).remove();}); });
 
 }
 
@@ -123,7 +126,7 @@ function updaten() {
 		     // console.log(data);
                       grafics.change();
 
-		          window.setTimeout(updaten, 10000);
+		          window.setTimeout(updaten, 60000);
 		      });
 	  $.get("xarxa.php",{q:'out'}, function(data) {
 		      $("#eth0out span.line").html(data);
@@ -131,6 +134,6 @@ function updaten() {
 		     // console.log(data);
                       grafics.change();
 
-		          window.setTimeout(updaten, 10000);
+		          //window.setTimeout(updaten, 10000);
 		      });
 }
