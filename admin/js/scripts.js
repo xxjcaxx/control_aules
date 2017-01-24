@@ -62,10 +62,13 @@ function f_pcs(){
 			if(/^c192.168.[0-9]+.[0-9]{1,2}$/.test(ip)){$(this).addClass('desconeguts');}
 			var $block = $('<img title="Bloquear esta IP"  id="b'+ip+'" alt="Bloquea esta IP" src="images/connected.png"/>');
 			
+
+			// Per mostrar els desconnectats i els ralentits
 			if($("#actual").text().indexOf(ip.substring(1)) > 0 ){
 				$(this).addClass('off');
 			        $block.attr('src','images/disconnected.png');
 				}
+i
 
 			$(this).append($block);
 			$block.on("click",function(event){ 
@@ -94,7 +97,16 @@ function f_pcs(){
 			}
 
 	});
+
+			// mostrar la tortuga
+			if($("#actual").text().indexOf('noqueue') < 0 ){
+				turtle('put');
+
+				}
 }
+
+
+///////////////////////// BLOQUEAR ///////////////////////////////////////
 
 function bloquear(ip){
 	$.get('bloquear.php',{ip:ip},function(data){}).done(function(){console.log('bloqueado '+ip)});
@@ -103,21 +115,46 @@ function desbloquear(ip){
 	$.get('bloquear.php',{ipd:ip},function(data){}).done(function(){console.log('desbloqueado '+ip)});
 	} 
 
+
+///////////////////////// RALENTIR /////////////////////
+
 function slow(){
 
  if($('.turtle').length == 0) {
 	$.get('slow.php',function(data){}).done(function(){console.log('Lent')});
-        $("#panel ul li").each(function(i){
-	$(this).prepend('<img class="turtle" src="images/turtle.png" title="Ralentizat" />');
+     //   $("#panel ul li").each(function(i){
+	//$(this).prepend('<img class="turtle" src="images/turtle.png" title="Ralentizat" />');
 	
-	});
+	//});
+        turtle('put');
 	}
 }
+
+function turtle(act){
+if(act=='put'){
+
+        $("#panel ul li").each(function(i){
+	$(this).prepend('<img class="turtle" src="images/turtle.png" title="Ralentizat" />');
+	console.log('put');
+	});
+}
+if(act=='del'){
+
+                 $('.turtle').each(function(i){$(this).remove();}); 
+	
+}
+}
+
 function reset(){
        
-	$.get('reset.php',function(data){}).done(function(){console.log('Reset'); $('.turtle').each(function(i){$(this).remove();}); });
+	$.get('reset.php',function(data){}).done(function(){console.log('Reset'); 
+                 $('.turtle').each(function(i){$(this).remove();}); 
+           });
 
 }
+
+
+/////////////////////////////// GRAFIQUES /////////////////
 
 function updaten() {
 	  $.get("xarxa.php",{q:'in'}, function(data) {
