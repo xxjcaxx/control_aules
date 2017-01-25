@@ -22,7 +22,7 @@
 <h1>Control d'Aula</h1>
 	<span class="accio" id="btots">Bloquejar a tots</span>
 	<span class="accio" id="dtots">Desbloquejar a tots</span>
-	<span class="accio" id="ralentir">Ralentir Internet als alumnes</span>
+	<span class="accio" id="ralentir">Ralentir Internet als alumnes<input type="number" id="velocitat"/></span>
 	<span class="accio" id="reset">Velocitat estandard per a tots</span>
 	</div>
 <div id="derecha">

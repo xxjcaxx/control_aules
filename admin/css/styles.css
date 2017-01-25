@@ -99,6 +99,10 @@ padding-bottom:1000px;
 width:225px;
 }
 
+#velocitat{
+font-size:10px;
+}
+
 #accions span.accio{
 background-color: #2A3F54;
 display:block;

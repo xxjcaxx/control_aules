@@ -121,7 +121,9 @@ function desbloquear(ip){
 function slow(){
 
  if($('.turtle').length == 0) {
-	$.get('slow.php',function(data){}).done(function(){console.log('Lent')});
+
+	var velocitat = $('#velocitat').val();
+	$.get('slow.php',{v:velocitat},function(data){}).done(function(){console.log('Lent')});
      //   $("#panel ul li").each(function(i){
 	//$(this).prepend('<img class="turtle" src="images/turtle.png" title="Ralentizat" />');
 	
