@@ -164,7 +164,10 @@ function updaten() {
                      // console.log( $("#eth0in span.line").html(data));
 		     // console.log(data);
                       grafics.change();
-
+                      var arr = data.split(',');
+                      var max = Math.max(...arr);
+                      $('#min').html(max);
+                      $("#eth0in")
 		          window.setTimeout(updaten, 60000);
 		      });
 	  $.get("xarxa.php",{q:'out'}, function(data) {
@@ -173,6 +176,9 @@ function updaten() {
 		     // console.log(data);
                       grafics.change();
 
+                      var arr = data.split(',');
+                      var max = Math.max(...arr);
+                      $('#mout').html(max);
 		          //window.setTimeout(updaten, 10000);
 		      });
 }

@@ -129,6 +129,7 @@ margin-bottom:10px;
 padding:10px;
 }
 #net div.nic{
+font-size:10px;
 display:block;
 float:left;
 height:50px;
@@ -142,6 +143,13 @@ height:50px;
 
 svg.peity{
 margin:0 10px 0 10px;
+}
+
+#net span.max {
+margin-left:5px;
+display:block;
+float:left;
+height:50px;
 }
 
 /*https://colorlib.com/polygon/gentelella/index.html
