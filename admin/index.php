@@ -1,3 +1,15 @@
+<?php 
+session_start();
+
+if($_POST['uname'] && $_POST['psw'])
+{
+
+if($_POST['psw']=='lliurex'){
+$_SESSION['user']='lliurex';
+}
+
+}
+?>
 <!doctype html>
 
 <html lang="es">
@@ -13,16 +25,22 @@
 
 <body>
 
+
   <script src="js/jquery-3.1.1.min.js"></script>
   <script src="js/jquery.peity.min.js"></script>
   <script src="js/scripts.js"></script>
 <div id="contenedor">
+<?php 
+
+if($_SESSION['user']=='lliurex'){
+
+?>
 	<div id="accions">
 	
 <h1>Control d'Aula</h1>
 	<span class="accio" id="btots">Bloquejar a tots</span>
 	<span class="accio" id="dtots">Desbloquejar a tots</span>
-	<span class="accio" id="ralentir">Ralentir Internet als alumnes<input type="number" id="velocitat"/></span>
+	<span class="accio" id="ralentir">Ralentir Internet als alumnes<input type="number" id="velocitat" value="3000"/></span>
 	<span class="accio" id="reset">Velocitat estandard per a tots</span>
 	</div>
 <div id="derecha">
@@ -42,5 +60,33 @@
 </div>
 </div>
 <div id="actual"></div>
+
+<?php
+}
+
+else {
+?>
+ <form action="index.php" method="post">
+
+  <div class="container">
+    <label><b>Usuari</b></label>
+    <input type="text" placeholder="Usuari" name="uname" required>
+
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Password" name="psw" required>
+
+    <button type="submit">Login</button>
+    <!-- <input type="checkbox" checked="checked"> Remember me -->
+  </div>
+
+  <div class="container" style="background-color:#f1f1f1">
+    <button type="button" class="cancelbtn">Cancelar</button>
+  </div>
+</form>
+<?php
+}
+?>
+</div>
 </body>
+
 </html>
