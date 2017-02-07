@@ -45,6 +45,8 @@ $(function()
 
 		grafics = $(".line").peity("line",{'height':'50px','width':'200px'});
 		updaten();
+                
+                $('#eth0in').on("click",function(event){grafiques();});
                 // http://benpickles.github.io/peity/#pie-charts
 
 		});
@@ -181,4 +183,12 @@ function updaten() {
                       $('#mout').html(max);
 		          //window.setTimeout(updaten, 10000);
 		      });
+		if($("#graphxarxa").length > 0) 
+		 $("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
+}
+
+function grafiques(){
+
+if($("#graphxarxa").length == 0) $("#net").append('<img id="graphxarxa" src="images/graph/output.png"/>');
+else $("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
 }
