@@ -190,5 +190,5 @@ function updaten() {
 function grafiques(){
 
 if($("#graphxarxa").length == 0) $("#net").append('<img id="graphxarxa" src="images/graph/output.png"/>');
-else $("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
+else $("#graphxarxa").remove();
 }

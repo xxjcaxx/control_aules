@@ -4,7 +4,7 @@ set xdata time
 set timefmt "%H:%M:%S"
 set style data lines
 
-set xtics rotate by 45 border offset 0,-1.1 font "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf,10"  out nomirror
+set xtics rotate by 45 border offset -2.5,-1.1 font "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf,10"  out nomirror
 
 set ytics font "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf,10"  out nomirror
 
