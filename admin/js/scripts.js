@@ -24,19 +24,16 @@ $(function()
 					$("#panel").html("<span>Llista de clients:</span>");
 					$("#panel").append(data);
 					}).done(function(){
-					//console.log($("#panel ul li"));
-					//$("#panel ul li").css('color','red');
-					f_pcs();
-					}).done(function(){ // Ja tinc tot fet, passe a donar format js a algunes coses
-                                        $("#actual pre").hide();
-					$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
+						f_pcs();             
+						}).done(function(){ // Ja tinc tot fet, passe a donar format js a algunes coses
+                                        		$("#actual pre").hide();
+							$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
 
-                                                
-                                        });
+                                        	});
                                   
  
 
-		});
+				});
                  // mestres se carrega tot, podem anar donant funcionalitat als botons:
                 $("#btots").on("click",function(event){bloquear('btots');});
                 $("#dtots").on("click",function(event){bloquear('dtots');});
@@ -70,7 +67,8 @@ function f_pcs(){
 				$(this).addClass('off');
 			        $block.attr('src','images/disconnected.png');
 				}
-i
+
+
 
 			$(this).append($block);
 			$block.on("click",function(event){ 
@@ -99,6 +97,7 @@ i
 			}
 
 	});
+
 
 			// mostrar la tortuga
 			if($("#actual").text().indexOf('noqueue') < 0 ){
@@ -139,13 +138,10 @@ if(act=='put'){
 
         $("#panel ul li").each(function(i){
 	$(this).prepend('<img class="turtle" src="images/turtle.png" title="Ralentizat" />');
-	console.log('put');
 	});
 }
 if(act=='del'){
-
                  $('.turtle').each(function(i){$(this).remove();}); 
-	
 }
 }
 

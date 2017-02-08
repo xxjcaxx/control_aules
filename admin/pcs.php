@@ -6,16 +6,29 @@
 if(isset($_GET['opt'])) {
    if($_GET['opt'] == 'actualitzar'){
 
-$res = exec('/bin/bash /var/www/html/admin/clients.sh');
+	$res = exec('/bin/bash /var/www/html/admin/clients.sh');
 
-echo $res;
-
-}
+	}
 }
 
+if(!file_exists ('/tmp/ips' )){
 
-$clients=file_get_contents('clients.html');
-echo $clients
+	$res = exec('/bin/bash /var/www/html/admin/clients.sh');
+}
+
+$handle = fopen("/tmp/ips", "r");
+
+if ($handle) {
+echo '<ul>';
+    while (($line = fgets($handle)) !== false) {
+        $line = str_replace("\n", "", $line);
+        echo '<li id="c'.$line.'"><span>'.$line.'</span></li>'."\n"; 
+    }
+
+    fclose($handle);
+echo '</ul>';
+}
+
 ?>
  <button type="button" id="act_clients">Actualitzar clients</button> 
 </div>
