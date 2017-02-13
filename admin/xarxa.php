@@ -11,4 +11,7 @@ if($_GET['q']=='out'){
 $res= exec('sudo sar -n DEV | grep "eth2" | grep -v "Average" | tr -s " " | cut -d" " -f6 | paste -sd","');
 echo $res;
 }
+// http://www.catonmat.net/blog/traffic-accounting-with-iptables/
 ?>
+
+

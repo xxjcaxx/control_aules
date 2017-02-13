@@ -53,6 +53,14 @@ padding: 0px 10px 0px 10px;
 #clients ul li span{
 padding: 2px;
 }
+#clients ul li span.consum{
+font-size:8px;
+
+}
+#clients ul li img.graph{
+width:100%;
+float:none;
+}
 
 #clients ul li img{
 width:19px;

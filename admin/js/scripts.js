@@ -11,15 +11,14 @@ $(document).on("click","#act_clients",function(event){
 		});
 
 
-
-// Inici del document on carrega tots els divs
-$(function()
-		{
-
+// Refrescar IPtables i Llista de clients
+function refrescar(){
 		$.get('iptables.php',function(data){
-				$("#actual").append("<span>resultat de IPtables:</span>");
+				$("#actual").html("<span>resultat de IPtables:</span>");
 				$("#actual").append(data);
 				}).done(function(){
+
+		                $("#panel").html('<img src="images/loading.gif"/>');
 				$.get('pcs.php',function(data){
 					$("#panel").html("<span>Llista de clients:</span>");
 					$("#panel").append(data);
@@ -30,10 +29,17 @@ $(function()
 							$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
 
                                         	});
-                                  
- 
 
 				});
+
+}
+
+
+// Inici del document on carrega tots els divs
+$(function()
+		{
+
+                refrescar();
                  // mestres se carrega tot, podem anar donant funcionalitat als botons:
                 $("#btots").on("click",function(event){bloquear('btots');});
                 $("#dtots").on("click",function(event){bloquear('dtots');});
@@ -94,6 +100,10 @@ function f_pcs(){
                                 $("html").scrollTop(scroll);
 			});
 
+			$(this).on("click",function(event){
+				mostrar_acct($(this),ip.substring(1));
+			});
+
 			}
 
 	});
@@ -110,10 +120,15 @@ function f_pcs(){
 ///////////////////////// BLOQUEAR ///////////////////////////////////////
 
 function bloquear(ip){
-	$.get('bloquear.php',{ip:ip},function(data){}).done(function(){console.log('bloqueado '+ip)});
+        
+	$("#panel").html('<img src="images/loading.gif"/>');
+	$.get('bloquear.php',{ip:ip},function(data){}).done(function(){
+        refrescar(); }); 
 	} 
 function desbloquear(ip){
-	$.get('bloquear.php',{ipd:ip},function(data){}).done(function(){console.log('desbloqueado '+ip)});
+	$("#panel").html('<img src="images/loading.gif"/>');
+	$.get('bloquear.php',{ipd:ip},function(data){}).done(function(){
+        refrescar(); });
 	} 
 
 
@@ -124,13 +139,10 @@ function slow(){
  if($('.turtle').length == 0) {
 
 	var velocitat = $('#velocitat').val();
-	$.get('slow.php',{v:velocitat},function(data){}).done(function(){console.log('Lent')});
-     //   $("#panel ul li").each(function(i){
-	//$(this).prepend('<img class="turtle" src="images/turtle.png" title="Ralentizat" />');
-	
-	//});
-        turtle('put');
+	$.get('slow.php',{v:velocitat},function(data){}).done(function(){console.log('Lent'); refrescar(); });
+       // turtle('put');
 	}
+
 }
 
 function turtle(act){
@@ -149,8 +161,8 @@ function reset(){
        
 	$.get('reset.php',function(data){}).done(function(){console.log('Reset'); 
                  $('.turtle').each(function(i){$(this).remove();}); 
+                 refrescar();
            });
-
 }
 
 
@@ -159,8 +171,6 @@ function reset(){
 function updaten() {
 	  $.get("xarxa.php",{q:'in'}, function(data) {
 		      $("#eth0in span.line").html(data);
-                     // console.log( $("#eth0in span.line").html(data));
-		     // console.log(data);
                       grafics.change();
                       var arr = data.split(',');
                       var max = Math.max(...arr);
@@ -170,21 +180,32 @@ function updaten() {
 		      });
 	  $.get("xarxa.php",{q:'out'}, function(data) {
 		      $("#eth0out span.line").html(data);
-                     // console.log( $("#eth0in span.line").html(data));
-		     // console.log(data);
                       grafics.change();
 
                       var arr = data.split(',');
                       var max = Math.max(...arr);
                       $('#mout').html(max);
-		          //window.setTimeout(updaten, 10000);
 		      });
 		if($("#graphxarxa").length > 0) 
 		 $("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
 }
 
 function grafiques(){
+	if($("#graphxarxa").length == 0) $("#net").append('<img id="graphxarxa" src="images/graph/output.png"/>');
+	else $("#graphxarxa").remove();
+}
 
-if($("#graphxarxa").length == 0) $("#net").append('<img id="graphxarxa" src="images/graph/output.png"/>');
-else $("#graphxarxa").remove();
+function mostrar_acct($linea,ip){
+
+	if($linea.find('span.consum').length==0){
+  		$.getJSON("ips_acct.js",function(data){
+//		console.log(data+" "+ip);
+	//	var res= JSON.parse(data);
+	//	console.log(res+" "+data);
+                var n = ip.split(".");
+		$linea.append('<span class="consum">Consum: in: '+data[ip]['in']+' out: '+data[ip]['out']+' <img  class="graph" src="images/graph/control_aules/spd'+n[3]+'.png"/></span>');
+		});
+}
+
+	else $linea.find('span.consum').remove();
 }
