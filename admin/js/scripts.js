@@ -188,11 +188,14 @@ function updaten() {
 		      });
 		if($("#graphxarxa").length > 0) 
 		 $("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
+		 $("#graphtotal").attr('src', $("#graphtotal").attr('src')+'?'+Math.random());
 }
 
 function grafiques(){
 	if($("#graphxarxa").length == 0) $("#net").append('<img id="graphxarxa" src="images/graph/output.png"/>');
 	else $("#graphxarxa").remove();
+	if($("#graphtotal").length == 0) $("#net").append('<img id="graphtotal" src="images/graph/control_aules/total.png"/>');
+	else $("#graphtotal").remove();
 }
 
 function mostrar_acct($linea,ip){
