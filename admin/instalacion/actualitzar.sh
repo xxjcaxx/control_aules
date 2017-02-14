@@ -16,12 +16,13 @@ rrdtool graph /var/lib/control_aules/spd$cip.png --start -6h --end $(date +%s) D
 done
 
 args=""
+colors=$(cat /var/www/html/admin/images/graph/colors)
 while read ip
 do
 ip=$(echo $ip | cut -d"." -f4)
-color=$(($ip*80000))
-color=$(printf "%06X\n" $color)
-[[ $ip -lt 200 ]] && args=$args" DEF:sin$ip=/var/lib/control_aules/client$ip.rrd:in:AVERAGE LINE1:sin$ip#$color:\"192.168.x.$ip\""
+color=$(($ip%64+1))
+color=$(echo "$colors" | sed -n "$color p")
+[[ $ip -lt 200 ]] && args=$args" DEF:sin$ip=/var/lib/control_aules/client$ip.rrd:in:AVERAGE LINE1:sin$ip$color:\"192.168.x.$ip\""
 done < /tmp/ips
 
 rrdtool graph /var/lib/control_aules/total.png --start -6h --end $(date +%s) $args
