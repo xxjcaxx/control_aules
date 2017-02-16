@@ -26,6 +26,8 @@ color=$(echo "$colors" | sed -n "$color p")
 done < /tmp/ips
 
 rrdtool graph /var/lib/control_aules/total.png --start -6h --end $(date +%s) $args
+rrdtool graph /var/lib/control_aules/totalsemana.png --start -6d --end $(date +%s) $args
+
 #rrdtool graph /var/lib/control_aules/total.png --start -6h --end $(date +%s) DEF:sin22=/var/lib/control_aules/client22.rrd:in:AVERAGE LINE1:sin22\#FF0000
 #echo $(date) >> /tmp/actualitzar
 #echo $(date) >> actualitzar.log

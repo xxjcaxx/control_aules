@@ -194,7 +194,7 @@ function updaten() {
 function grafiques(){
 	if($("#graphxarxa").length == 0) $("#net").append('<img id="graphxarxa" src="images/graph/output.png"/>');
 	else $("#graphxarxa").remove();
-	if($("#graphtotal").length == 0) $("#net").append('<img id="graphtotal" src="images/graph/control_aules/total.png"/>');
+	if($("#graphtotal").length == 0) $("#net").append('<p id="graphtotal"><img src="images/graph/control_aules/total.png"/><img src="images/graph/control_aules/totalsemana.png"/></p>');
 	else $("#graphtotal").remove();
 }
 
