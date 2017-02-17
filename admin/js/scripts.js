@@ -1,6 +1,7 @@
 
 // El botó d'actualitzar clients
 $(document).on("click","#act_clients",function(event){
+	//	refrescar();
 		$("#panel").html('<img src="images/loading.gif"/>');
 		$.get('pcs.php',{ opt: "actualitzar" },function(data){
 				$("#panel").html("<span>Llista de clients:</span>");
@@ -8,6 +9,7 @@ $(document).on("click","#act_clients",function(event){
 				}).done(function(){                             
 					f_pcs();
 					}); 
+                
 		});
 
 
@@ -36,9 +38,7 @@ function refrescar(){
 
 
 // Inici del document on carrega tots els divs
-$(function()
-		{
-
+$(function(){
                 refrescar();
                  // mestres se carrega tot, podem anar donant funcionalitat als botons:
                 $("#btots").on("click",function(event){bloquear('btots');});
@@ -68,7 +68,7 @@ function f_pcs(){
 			var $block = $('<img title="Bloquear esta IP"  id="b'+ip+'" alt="Bloquea esta IP" src="images/connected.png"/>');
 			
 
-			// Per mostrar els desconnectats i els ralentits
+			// Per mostrar els desconnectats mire en els IPtables actuals a vore si està la IP
 			if($("#actual").text().indexOf(ip.substring(1)) > 0 ){
 				$(this).addClass('off');
 			        $block.attr('src','images/disconnected.png');
@@ -82,29 +82,18 @@ function f_pcs(){
 
 				if(!$(this).parent().hasClass('off')){
 					bloquear(ip.substring(1));
-					$(this).parent().addClass('off');
-					$(this).attr('src','images/disconnected.png');
 				} else {
 					desbloquear(ip.substring(1));
-					$(this).parent().removeClass('off');
-					$(this).attr('src','images/connected.png');
 				}
-				$("#actual").html('');
-				setTimeout(function(){     
-				$.get('iptables.php',function(data){
-				$("#actual").append("<span>resultat de IPtables:</span>");
-				$("#actual").append(data);
-                                        $("#actual pre").hide();
-					$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
-				});  },1000);
                                 $("html").scrollTop(scroll);
 			});
-
+			}
+                        // les estadistiques per client
 			$(this).on("click",function(event){
 				mostrar_acct($(this),ip.substring(1));
 			});
 
-			}
+			
 
 	});
 
@@ -123,12 +112,14 @@ function bloquear(ip){
         
 	$("#panel").html('<img src="images/loading.gif"/>');
 	$.get('bloquear.php',{ip:ip},function(data){}).done(function(){
-        refrescar(); }); 
+        refrescar();
+	 }); 
 	} 
 function desbloquear(ip){
 	$("#panel").html('<img src="images/loading.gif"/>');
 	$.get('bloquear.php',{ipd:ip},function(data){}).done(function(){
-        refrescar(); });
+        refrescar();
+	 });
 	} 
 
 
