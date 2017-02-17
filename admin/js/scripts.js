@@ -203,3 +203,13 @@ function mostrar_acct($linea,ip){
 
 	else $linea.find('span.consum').remove();
 }
+
+/*
+export DISPLAY=:0
+export XAUTHORITY=/home/$(who | grep 'tty7' | cut -d" " -f1)/.Xauthority
+scrot captura.png
+ssh root@192.168.9.111 /root/captura.sh
+scp root@192.168.9.111:/home/captura.png ./admin/
+http://raspberrypi.stackexchange.com/questions/12838/capturing-screenshot-over-ssh
+
+*/

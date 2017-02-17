@@ -1,13 +1,22 @@
 <?php 
 session_start();
 
-if($_POST['uname'] && $_POST['psw'])
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if(! empty($_POST['uname']) && !empty($_POST['psw']))
 {
 
-if($_POST['psw']=='lliurex'){
+
+$hash='$2y$10$5h/K5/Vj.ODkl0hchxJ2BeEPWSj1ZZjBU1qCpiu2czdULkfzmOkeO';
+//$passs=password_hash($_POST['psw'], PASSWORD_DEFAULT);
+
+if(password_verify($_POST['psw'], $hash)){
 $_SESSION['user']='lliurex';
 }
+else{
+echo '<p>Contrasenya no valida</p>';
+}
 
+}
 }
 ?>
 <!doctype html>
