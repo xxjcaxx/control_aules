@@ -1,10 +1,12 @@
 <?php 
 session_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if(! empty($_POST['uname']) && !empty($_POST['psw']))
 {
-
 
 $hash='$2y$10$5h/K5/Vj.ODkl0hchxJ2BeEPWSj1ZZjBU1qCpiu2czdULkfzmOkeO';
 //$passs=password_hash($_POST['psw'], PASSWORD_DEFAULT);
@@ -40,7 +42,7 @@ echo '<p>Contrasenya no valida</p>';
   <script src="js/scripts.js"></script>
 <div id="contenedor">
 <?php 
-
+if(isset($_SESSION['user'])){
 if($_SESSION['user']=='lliurex'){
 
 ?>
@@ -72,7 +74,7 @@ if($_SESSION['user']=='lliurex'){
 
 <?php
 }
-
+}
 else {
 ?>
  <form action="index.php" method="post">
