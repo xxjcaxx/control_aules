@@ -6,14 +6,14 @@
 if(isset($_GET['opt'])) {
    if($_GET['opt'] == 'actualitzar'){
 
-	$res = exec('/bin/bash /var/www/html/admin/clients.sh');
+	$res = exec('sudo /bin/bash /var/www/html/admin/clients.sh');
 
 	}
 }
 
 if(!file_exists ('/tmp/ips' )){
 
-	$res = exec('/bin/bash /var/www/html/admin/clients.sh');
+	$res = exec('sudo /bin/bash /var/www/html/admin/clients.sh');
 }
 
 $handle = fopen("/tmp/ips", "r");
