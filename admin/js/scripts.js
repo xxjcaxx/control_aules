@@ -2,8 +2,11 @@
 // El botó d'actualitzar clients
 $(document).on("click","#act_clients",function(event){
 	//	refrescar();
+                var $arp=0;
+                if($("#arp").is(':checked')) {$arp=1;}
+
 		$("#panel").html('<img src="images/loading.gif"/>');
-		$.get('pcs.php',{ opt: "actualitzar" },function(data){
+		$.get('pcs.php',{ opt: "actualitzar",arp: $arp },function(data){
 				$("#panel").html("<span>Llista de clients:</span>");
 				$("#panel").append(data);
 				}).done(function(){                             
@@ -11,6 +14,7 @@ $(document).on("click","#act_clients",function(event){
 					}); 
                 
 		});
+
 
 
 // Refrescar IPtables i Llista de clients
@@ -89,7 +93,7 @@ function f_pcs(){
 			});
 			}
                         // les estadistiques per client
-			$(this).on("click",function(event){
+			$(this).on("click", function(event){
 				mostrar_acct($(this),ip.substring(1));
 			});
 
@@ -191,25 +195,52 @@ function grafiques(){
 
 function mostrar_acct($linea,ip){
 
+        var n = ip.split(".");
 	if($linea.find('span.consum').length==0){
   		$.getJSON("ips_acct.js",function(data){
 //		console.log(data+" "+ip);
 	//	var res= JSON.parse(data);
 	//	console.log(res+" "+data);
-                var n = ip.split(".");
+
 		$linea.append('<span class="consum">Consum: in: '+data[ip]['in']+' out: '+data[ip]['out']+' <img  class="graph" src="images/graph/control_aules/spd'+n[3]+'.png"/></span>');
+                $linea.after('<a class="acaptura" id="image'+n[3]+'" href="images/graph/control_aules/captura'+n[3]+'.png"><span class="capturar" id="capturar'+n[3]+'"></span></a>');
+                //$("#capturar"+n[3]).on('click',function(event){capturar(n[3]);});
+                capturar(n[3]);
+//                $("#capturar"+n[3]).fancybox({type : "image"});
 		});
 }
 
-	else $linea.find('span.consum').remove();
+	else {
+		$linea.find('span.consum').remove();
+                $("#capturar"+n[3]).remove();
+	     }
+
+}
+
+function capturar(n){
+  $.get('capturar.php',{ip:n},function(data){console.log(data);}).done(function(){
+               
+                $("#capturar"+n).append('<img src="images/graph/control_aules/captura'+n+'.png" />');
+		});
 }
 
 /*
+TODO:
+
+Gràfics dels clients més actius
+
+Detectar el sistema operatiu del clients
+
+Capturar pantalles:
 export DISPLAY=:0
 export XAUTHORITY=/home/$(who | grep 'tty7' | cut -d" " -f1)/.Xauthority
 scrot captura.png
 ssh root@192.168.9.111 /root/captura.sh
 scp root@192.168.9.111:/home/captura.png ./admin/
 http://raspberrypi.stackexchange.com/questions/12838/capturing-screenshot-over-ssh
+ssh root@192.168.9.101 'bash -s' < captures.sh > /var/lib/control_aules/client1.png
+
+Obtindre una terminal:
+https://github.com/krishnasrinivas/wetty
 
 */

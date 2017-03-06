@@ -1,9 +1,6 @@
 <?php 
 session_start();
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if(! empty($_POST['uname']) && !empty($_POST['psw']))
 {
@@ -37,40 +34,38 @@ echo '<p>Contrasenya no valida</p>';
 <body>
 
 
-  <script src="js/jquery-3.1.1.min.js"></script>
-  <script src="js/jquery.peity.min.js"></script>
-  <script src="js/scripts.js"></script>
-<div id="contenedor">
+	<script src="js/jquery-3.1.1.min.js"></script>
+	<script src="js/jquery.peity.min.js"></script>
+	<script src="js/scripts.js"></script>
+	<div id="contenedor">
 <?php 
 if(isset($_SESSION['user'])){
 if($_SESSION['user']=='lliurex'){
 
 ?>
-	<div id="accions">
-	
-<h1>Control d'Aula</h1>
-	<span class="accio" id="btots">Bloquejar a tots</span>
-	<span class="accio" id="dtots">Desbloquejar a tots</span>
-	<span class="accio" id="ralentir">Ralentir Internet als alumnes<input type="number" id="velocitat" value="3000"/></span>
-	<span class="accio" id="reset">Velocitat estandard per a tots</span>
+		<div id="accions">
+			<h1>Control d'Aula</h1>
+			<span class="accio" id="btots">Bloquejar a tots</span>
+			<span class="accio" id="dtots">Desbloquejar a tots</span>
+			<span class="accio" id="ralentir">Ralentir Internet als alumnes<input type="number" id="velocitat" value="3000"/></span>
+			<span class="accio" id="reset">Velocitat estandard per a tots</span>
+		</div>
+		<div id="derecha">
+			<div id="net">
+				<div class="nic" id="eth0in"><span class="nic">eth2<br/>In:</span>
+					<span class="line"></span>
+					<span id="min" class="max">100</span>
+				</div>
+				<div class="nic" id="eth0out"><span class="nic">eth2<br/>Out:</span>
+					<span class="line"></span>
+					<span id="mout" class="max">100</span>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+			<div id="panel"> </div>
+		</div>
 	</div>
-<div id="derecha">
-<div id="net">
-<div class="nic" id="eth0in"><span class="nic">eth2<br/>In:</span>
-<span class="line">0.05,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,2.18,1.02,0.00,1.92,1.63,0.00,0.00,0.00,0.00,0.74,0.74,0.74,1.64,0.13,0.89,0.00,0.00,0.89,1.47,0.74,0.74,0.73,0.83,1.77,0.87,0.87,0.00,0.74,2.06,1.47,0.00,0.74,1.47,0.74,1.00,0.00,0.74,0.00,0.00,0.49</span>
-<span id="min" class="max">100</span>
-</div>
-<div class="nic" id="eth0out"><span class="nic">eth2<br/>Out:</span>
-<span class="line">0.05,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,2.18,1.02,0.00,1.92,1.63,0.00,0.00,0.00,0.00,0.74,0.74,0.74,1.64,0.13,0.89,0.00,0.00,0.89,1.47,0.74,0.74,0.73,0.83,1.77,0.87,0.87,0.00,0.74,2.06,1.47,0.00,0.74,1.47,0.74,1.00,0.00,0.74,0.00,0.00,0.49</span>
-
-<span id="mout" class="max">100</span>
-</div>
-<div style="clear:both;"></div>
-</div>
-<div id="panel"> </div>
-</div>
-</div>
-<div id="actual"></div>
+	<div id="actual"></div>
 
 <?php
 }
