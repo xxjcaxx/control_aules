@@ -30,6 +30,7 @@ border-bottom:2px solid #e6e9ed;
 }
 
 
+
 #clients {
 /*width: 550px;*/
 }
@@ -123,6 +124,7 @@ padding-bottom:1000px;
 width:225px;
 }
 
+
 #velocitat{
 font-size:10px;
 }
@@ -141,7 +143,13 @@ cursor: pointer;
 #accions span.accio:hover{
 border-bottom:1px solid #1F2F3F;
 border-top:1px solid #536271;
-} 
+}
+#accions span.accio a{
+color:#eee;
+font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+font-size:12px;
+}
+ 
 #derecha{
 flex:1 ;
 padding:10px;

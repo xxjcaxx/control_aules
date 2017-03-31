@@ -49,6 +49,11 @@ if($_SESSION['user']=='lliurex'){
 			<span class="accio" id="dtots">Desbloquejar a tots</span>
 			<span class="accio" id="ralentir">Ralentir Internet als alumnes<input type="number" id="velocitat" value="3000"/></span>
 			<span class="accio" id="reset">Velocitat estandard per a tots</span>
+			<h1 style="font-size:1em;">Totes</h1>
+                        <span class="accio"><a href="https://10.20.8.254/admin">2DAM-ASIX</a></span>
+                        <span class="accio"><a href="https://10.20.9.254/admin">2SMX</a></span>
+                        <span class="accio"><a href="https://10.20.10.254/admin">1SMX</a></span>
+                        <span class="accio"><a href="https://10.20.14.254/admin">1DAM-ASIX</a></span>
 		</div>
 		<div id="derecha">
 			<div id="net">
