@@ -69,7 +69,7 @@ function f_pcs(){
 			else if(/^c192.168.[0-9]+.100$/.test(ip)){$(this).addClass('profe');}
 			else {
 			if(/^c192.168.[0-9]+.[0-9]{1,2}$/.test(ip)){$(this).addClass('desconeguts');}
-			var $block = $('<img title="Bloquear esta IP"  id="b'+ip+'" alt="Bloquea esta IP" src="images/connected.png"/>');
+			var $block = $('<img title="Bloquear esta IP"  id="b'+ip+'" class="bloquea" alt="Bloquea esta IP" src="images/connected.png"/>');
 			
 
 			// Per mostrar els desconnectats mire en els IPtables actuals a vore si està la IP
@@ -202,17 +202,27 @@ function mostrar_acct($linea,ip){
 	//	var res= JSON.parse(data);
 	//	console.log(res+" "+data);
 
-		$linea.append('<span class="consum">Consum: in: '+data[ip]['in']+' out: '+data[ip]['out']+' <img  class="graph" src="images/graph/control_aules/spd'+n[3]+'.png"/></span>');
-                $linea.after('<a class="acaptura" id="image'+n[3]+'" href="images/graph/control_aules/captura'+n[3]+'.png"><span class="capturar" id="capturar'+n[3]+'"></span></a>');
+			$linea.append('<span class="consum">Consum: in: '+data[ip]['in']+' out: '+data[ip]['out']+' <img  class="graph" src="images/graph/control_aules/spd'+n[3]+'.png"/></span>');
+                	$linea.after('<a class="acaptura" id="image'+n[3]+'" href="images/graph/control_aules/captura'+n[3]+'.png" target="_blank"><span class="capturar" id="capturar'+n[3]+'"></span></a>');
                 //$("#capturar"+n[3]).on('click',function(event){capturar(n[3]);});
-                capturar(n[3]);
+               		 capturar(n[3]);
 //                $("#capturar"+n[3]).fancybox({type : "image"});
 		});
-}
+                $linea.find('img.bloquea').after('<img src="images/apagar.svg" id="apagar'+n[3]+'" class="apaga" />');
+                $linea.find('img.bloquea').after('<img src="images/alert.png" id="notifi'+n[3]+'" class="notifica" />');
+                $('#apagar'+n[3]).on('click',function(event){
+			apagar($(this).attr('id'));
+                 });
+                $('#notifi'+n[3]).on('click',function(event){
+			notificar($(this).attr('id'));
+                 });
+	}
 
 	else {
 		$linea.find('span.consum').remove();
                 $("#capturar"+n[3]).remove();
+                $linea.find('img.apaga').remove();
+                $linea.find('img.notifica').remove();
 	     }
 
 }
@@ -222,6 +232,20 @@ function capturar(n){
                
                 $("#capturar"+n).append('<img src="images/graph/control_aules/captura'+n+'.png" />');
 		});
+}
+
+function apagar(id){
+  n=id.substring(6);
+  $.get('apagar.php',{ip:n},function(data){console.log(data);}).done(function(){
+});
+}
+
+function notificar(id){
+
+n=id.substring(6);
+  $.get('notificar.php',{ip:n,mensaje:'hola mon'},function(data){console.log(data);}).done(function(){
+
+});
 }
 
 /*
