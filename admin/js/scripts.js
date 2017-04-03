@@ -14,8 +14,22 @@ $(document).on("click","#act_clients",function(event){
 					}); 
                 
 		});
+$(document).on("click","#control",function(event){
+refrescar();
+		});
 
 
+$(document).on("click","#totes",function(event){
+
+		$("#panel").html('<img src="images/loading.gif"/>');
+		$.get('totes.php', function(data){
+				$("#panel").html("<span>Totes les aules</span>");
+				$("#panel").append(data);
+				}).done(function(){                             
+			
+					}); 
+                
+		});
 
 // Refrescar IPtables i Llista de clients
 function refrescar(){
