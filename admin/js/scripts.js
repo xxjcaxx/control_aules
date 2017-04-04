@@ -11,8 +11,8 @@ $(document).on("click","#act_clients",function(event){
 				$("#panel").append(data);
 				}).done(function(){                             
 					f_pcs();
+                                        updaten();
 					}); 
-                
 		});
 $(document).on("click","#control",function(event){
 refrescar();
@@ -51,6 +51,7 @@ function refrescar(){
                                         	});
 
 				});
+                 
 
 }
 
@@ -63,6 +64,7 @@ $(function(){
                 $("#dtots").on("click",function(event){bloquear('dtots');});
                 $("#ralentir").on("click",function(event){slow();});
                 $("#reset").on("click",function(event){reset();});
+                $("#capturartots").on("click",function(event){capturartots();});
 
 		grafics = $(".line").peity("line",{'height':'50px','width':'200px'});
 		updaten();
@@ -212,15 +214,11 @@ function mostrar_acct($linea,ip){
         var n = ip.split(".");
 	if($linea.find('span.consum').length==0){
   		$.getJSON("ips_acct.js",function(data){
-//		console.log(data+" "+ip);
-	//	var res= JSON.parse(data);
-	//	console.log(res+" "+data);
+		console.log("Acct: "+ip);
 
 			$linea.append('<span class="consum">Consum: in: '+data[ip]['in']+' out: '+data[ip]['out']+' <img  class="graph" src="images/graph/control_aules/spd'+n[3]+'.png"/></span>');
                 	$linea.after('<a class="acaptura" id="image'+n[3]+'" href="images/graph/control_aules/captura'+n[3]+'.png" target="_blank"><span class="capturar" id="capturar'+n[3]+'"></span></a>');
-                //$("#capturar"+n[3]).on('click',function(event){capturar(n[3]);});
                		 capturar(n[3]);
-//                $("#capturar"+n[3]).fancybox({type : "image"});
 		});
                 $linea.find('img.bloquea').after('<img src="images/apagar.svg" id="apagar'+n[3]+'" class="apaga" />');
                 $linea.find('img.bloquea').after('<img src="images/alert.png" id="notifi'+n[3]+'" class="notifica" />');
@@ -246,6 +244,16 @@ function capturar(n){
                
                 $("#capturar"+n).append('<img src="images/graph/control_aules/captura'+n+'.png" />');
 		});
+}
+
+function capturartots(){
+  $("#panel ul li").each(function(i){
+        var n=$(this).attr('id').substring(1).split(".")[3];
+        var ipn=$(this).attr('id').substring(1);
+  	$.get('capturar.php',{ip:n},function(data){console.log(data);}).done(function(){
+                $("#captures").append('<div class="capturas"><a href="images/graph/control_aules/captura'+n+'.png"><img src="images/graph/control_aules/captura'+n+'.png" /></a>IP: '+ipn+'</div>');
+    });
+       });  
 }
 
 function apagar(id){

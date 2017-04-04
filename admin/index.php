@@ -49,6 +49,7 @@ if($_SESSION['user']=='lliurex'){
 			<span class="accio" id="dtots">Desbloquejar a tots</span>
 			<span class="accio" id="ralentir">Ralentir Internet als alumnes<input type="number" id="velocitat" value="3000"/></span>
 			<span class="accio" id="reset">Velocitat estandard per a tots</span>
+			<span class="accio" id="capturartots">Capturar a tots</span>
 			<h1 style="font-size:1em;" id="totes">Totes les aules</h1>
                         <span class="accio"><a href="https://10.20.8.254/admin">2DAM-ASIX</a></span>
                         <span class="accio"><a href="https://10.20.9.254/admin">2SMX</a></span>
@@ -68,6 +69,7 @@ if($_SESSION['user']=='lliurex'){
 				<div style="clear:both;"></div>
 			</div>
 			<div id="panel"> </div>
+			<div id="captures"> </div>
 		</div>
 	</div>
 	<div id="actual"></div>

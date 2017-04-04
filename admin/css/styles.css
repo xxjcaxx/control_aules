@@ -91,6 +91,28 @@ width: 200px;
 height: auto;
 }
 
+#captures{
+
+padding:30px;
+background-color:#FFF;
+float:left;
+border:1px solid #e6e9ed;
+}
+
+.capturas{
+
+padding:5px;
+background-color:#FFF;
+float:left;
+border:1px solid #e6e9ed;
+}
+
+.capturas img{
+width: 200px;
+height: auto;
+} 
+
+
 #actual{
 font-size:8px;
 clear:both;
