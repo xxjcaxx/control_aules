@@ -14,21 +14,18 @@ $(document).on("click","#act_clients",function(event){
                                         updaten();
 					}); 
 		});
-$(document).on("click","#control",function(event){
-refrescar();
-		});
 
+//el Logo de control d'aula
+$(document).on("click","#control",function(event){ refrescar();});
 
+// El logo de totes les aules
 $(document).on("click","#totes",function(event){
-
 		$("#panel").html('<img src="images/loading.gif"/>');
 		$.get('totes.php', function(data){
 				$("#panel").html("<span>Totes les aules</span>");
 				$("#panel").append(data);
 				}).done(function(){                             
-			
 					}); 
-                
 		});
 
 // Refrescar IPtables i Llista de clients
@@ -71,6 +68,13 @@ $(function(){
                 
                 $('#eth0in').on("click",function(event){grafiques();});
                 // http://benpickles.github.io/peity/#pie-charts
+                 
+                // dades fonamentals
+                ipeth1=$("#ipeth1").text(); 
+		xarxaeth1=ipeth1.split(".")[0]+"."+ipeth1.split(".")[1]+"."+ipeth1.split(".")[2];
+                ipeth0=$("#ipeth0").text();
+                ipeth2=$("#ipeth2").text();
+               
 
 		});
 
@@ -247,14 +251,25 @@ function capturar(n){
 }
 
 function capturartots(){
+   $("#captures").html('<span>Captures:</span>');
   $("#panel ul li").each(function(i){
         var n=$(this).attr('id').substring(1).split(".")[3];
+        if(n>=100 && n<200){
         var ipn=$(this).attr('id').substring(1);
-  	$.get('capturar.php',{ip:n},function(data){console.log(data);}).done(function(){
-                $("#captures").append('<div class="capturas"><a href="images/graph/control_aules/captura'+n+'.png"><img src="images/graph/control_aules/captura'+n+'.png" /></a>IP: '+ipn+'</div>');
-    });
-       });  
+  	$.get('capturar.php',{ip:n},function(data){}).done(function(){
+                $("#captures").append('<div class="capturas"><a target="_blank" id="capturas'+n+'" href="images/graph/control_aules/captura'+n+'.png"></a>IP: '+ipn+'</div>');
+                var newcaptura = $("<img>").attr("src","images/graph/control_aules/captura"+n+".png").attr("id","imgcapturas"+n).on("error",function(){
+$(this).attr("src","images/alert.png").css("height","100px");;
+});
+              $("#capturas"+n).append(newcaptura);  
+});
 }
+       });
+}
+$(document).on("error","img", function() {
+    $(this).hide();
+    $("#error").show();
+});
 
 function apagar(id){
   n=id.substring(6);

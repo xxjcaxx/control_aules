@@ -30,6 +30,13 @@ border-bottom:2px solid #e6e9ed;
 }
 
 
+#captures>span{
+font-size:24px;
+color:#73879c;
+font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+display:block;
+border-bottom:2px solid #e6e9ed;
+}
 
 #clients {
 /*width: 550px;*/
@@ -93,6 +100,7 @@ height: auto;
 
 #captures{
 
+width: 500px;
 padding:30px;
 background-color:#FFF;
 float:left;
@@ -101,6 +109,7 @@ border:1px solid #e6e9ed;
 
 .capturas{
 
+
 padding:5px;
 background-color:#FFF;
 float:left;
@@ -108,8 +117,9 @@ border:1px solid #e6e9ed;
 }
 
 .capturas img{
-width: 200px;
+width: 235px;
 height: auto;
+display:block;
 } 
 
 
@@ -171,6 +181,25 @@ color:#eee;
 font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
 font-size:12px;
 }
+
+
+#accions ul{
+/*width: 500px;*/
+padding:0px;
+}
+
+
+#accions ul li{
+/*background-color: #1ABC9C;*/
+display:block;
+/*border-radius: 5px;*/
+color:#eee;
+font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+font-size:12px;
+margin:2px;
+padding: 0px 10px 0px 10px;
+}
+
  
 #derecha{
 flex:1 ;

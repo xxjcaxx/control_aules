@@ -42,6 +42,15 @@ echo '<p>Contrasenya no valida</p>';
 if(isset($_SESSION['user'])){
 if($_SESSION['user']=='lliurex'){
 
+$command="/sbin/ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'";
+$localIP = exec ($command);
+//echo $localIP;
+$command="/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'";
+$externalIP = exec ($command);
+
+$command="/sbin/ifconfig eth2 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'";
+$alternateIP = exec ($command);
+
 ?>
 		<div id="accions">
 			<h1 id="control">Control d'Aula</h1>
@@ -55,6 +64,14 @@ if($_SESSION['user']=='lliurex'){
                         <span class="accio"><a href="https://10.20.9.254/admin">2SMX</a></span>
                         <span class="accio"><a href="https://10.20.10.254/admin">1SMX</a></span>
                         <span class="accio"><a href="https://10.20.14.254/admin">1DAM-ASIX</a></span>
+                        
+			<h1 style="font-size:1em;">Dades server</h1>
+<ul id="dades_server">
+				<li>IP actual: <span id="ipactual"><?php  echo $_SERVER['SERVER_ADDR']; ?></span></li>
+				<li>IP eth1: <span id="ipeth1"> <?php echo $localIP; ?></span></li>
+				<li>IP eth0: <span id="ipeth0"> <?php echo $externalIP; ?></span></li>
+				<li>IP eth2: <span id="ipeth2"> <?php echo $alternateIP; ?></span></li>
+</ul>
 		</div>
 		<div id="derecha">
 			<div id="net">

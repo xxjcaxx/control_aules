@@ -2,7 +2,8 @@
 session_start();
 if($_SESSION['user']=='lliurex'){
 if(isset($_GET['ip'])){
-           $res = exec('sudo ssh root@192.168.9.'.$_GET['ip'].' \'shutdown 0\'');
+$prefijo=exec("ifconfig | egrep -o '192.168.[0-9]+'");
+           $res = exec('sudo ssh root@'.$prefijo.'.'.$_GET['ip'].' \'shutdown 0\'');
            echo $res;
            
 	}
