@@ -39,4 +39,9 @@ if(isset($_GET['ipd'])){
 $res = exec('sudo iptables -D FORWARD -s '.$_GET['ipd'].' -j DROP');
 	}
 } //de la sesio
+// TODO 
+// Bloquejar tot internet als alumnes en la seua màquina però permetre desbloquejar-lo.
+// https://serverfault.com/questions/198966/iptables-blocking-outbound-traffic-except-to-certain-ip-addresses
+
+
 ?>
