@@ -1,3 +1,51 @@
+//funció per omplir els clients
+
+clients={};
+for(i=1;i<255;i++){
+	clients[i]={'on':0};
+}
+
+ipeth1=0; 
+xarxaeth1=0;
+ipeth0=0;
+ipeth2=0;
+
+function obtener_datos(){
+	var array;
+
+	for(i=1;i<255;i++){
+	clients[i]={'on':0};
+	}
+
+        ///console.log(clients);
+	$.get('pcs.php',{opt:"solo_ips",arp:'no'},function(data){
+           	array = data.split(';');
+         //	console.log(array);
+		for(i=0;i<array.length;i++){
+			clients[array[i].split('.')[3]]['on']=1;
+		}
+        //console.log(clients);
+        });
+
+}
+
+function get_pcs(){
+
+                var $arp=0;
+		$.get('pcs.php',{ opt: "actualitzar",arp: $arp },function(data){
+				$("#panel").html("<span>Llista de clients:</span>");
+				$("#panel").append(data);
+				}).done(function(){                             
+					f_pcs();
+                                	obtener_datos();
+                                       // updaten();
+                			$.get('mapa.php',function(data){
+						$("#panel").append(data);
+					}).done(function(){f_mapa();}); 
+					});
+
+}
+
 
 // El botó d'actualitzar clients
 $(document).on("click","#act_clients",function(event){
@@ -6,13 +54,7 @@ $(document).on("click","#act_clients",function(event){
                 if($("#arp").is(':checked')) {$arp=1;}
 
 		$("#panel").html('<img src="images/loading.gif"/>');
-		$.get('pcs.php',{ opt: "actualitzar",arp: $arp },function(data){
-				$("#panel").html("<span>Llista de clients:</span>");
-				$("#panel").append(data);
-				}).done(function(){                             
-					f_pcs();
-                                        updaten();
-					}); 
+                get_pcs();
 		});
 
 //el Logo de control d'aula
@@ -35,18 +77,11 @@ function refrescar(){
 				$("#actual").append(data);
 				}).done(function(){
 
+
 		                $("#panel").html('<img src="images/loading.gif"/>');
-				$.get('pcs.php',function(data){
-					$("#panel").html("<span>Llista de clients:</span>");
-					$("#panel").append(data);
-					}).done(function(){
-						f_pcs();             
-						}).done(function(){ // Ja tinc tot fet, passe a donar format js a algunes coses
-                                        		$("#actual pre").hide();
-							$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
-
-                                        	});
-
+				get_pcs();
+                                $("#actual pre").hide();
+				$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
 				});
                  
 
@@ -61,21 +96,21 @@ $(function(){
                 $("#dtots").on("click",function(event){bloquear('dtots');});
                 $("#ralentir").on("click",function(event){slow();});
                 $("#reset").on("click",function(event){reset();});
-                $("#capturartots").on("click",function(event){capturartots();});
+    //            $("#capturartots").on("click",function(event){capturartots();});
 
 		grafics = $(".line").peity("line",{'height':'50px','width':'200px'});
 		updaten();
-                
+                 
                 $('#eth0in').on("click",function(event){grafiques();});
                 // http://benpickles.github.io/peity/#pie-charts
                  
                 // dades fonamentals
                 ipeth1=$("#ipeth1").text(); 
-		xarxaeth1=ipeth1.split(".")[0]+"."+ipeth1.split(".")[1]+"."+ipeth1.split(".")[2];
+		rxaeth1=ipeth1.split(".")[0]+"."+ipeth1.split(".")[1]+"."+ipeth1.split(".")[2];
                 ipeth0=$("#ipeth0").text();
                 ipeth2=$("#ipeth2").text();
                
-
+		capturarMapa();
 		});
 
 // Funció per a donar color i format als clients
@@ -127,6 +162,17 @@ function f_pcs(){
 				turtle('put');
 
 				}
+}
+
+function f_mapa(){
+        var t = Math.random()
+	for(i=101;i<125;i++){
+		if(clients[i]['on']==1){
+			$('#mapa_pantalla_'+i).css({'background-color':'#1ABC9C','background-image':'url("images/graph/control_aules/captura'+i+'.png?'+t+'")','background-size': 'contain'}).html('<span class="mapa_pc_numero">'+i+'</span>') ;
+                        //console.log(i); 
+		}
+	}
+
 }
 
 
@@ -190,7 +236,7 @@ function updaten() {
                       var arr = data.split(',');
                       var max = Math.max(...arr);
                       $('#min').html(max);
-                      $("#eth0in")
+                  //    $("#eth0in")
 		          window.setTimeout(updaten, 60000);
 		      });
 	  $.get("xarxa.php",{q:'out'}, function(data) {
@@ -201,9 +247,12 @@ function updaten() {
                       var max = Math.max(...arr);
                       $('#mout').html(max);
 		      });
-		if($("#graphxarxa").length > 0) 
+		//if($("#graphxarxa").length > 0) 
 		 $("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
 		 $("#graphtotal").attr('src', $("#graphtotal").attr('src')+'?'+Math.random());
+                 $("#estadistiques_hui").html('<img src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
+
+                 $("#estadistiques_setmana").html('<img src="images/graph/control_aules/totalsemana.png?'+Math.random()+'"/>');
 }
 
 function grafiques(){
@@ -243,13 +292,31 @@ function mostrar_acct($linea,ip){
 
 }
 
+///////////////////////////////////////////////////CAPTURES////////////////////////
+
 function capturar(n){
-  $.get('capturar.php',{ip:n},function(data){console.log(data);}).done(function(){
-               
+  $.get('capturar.php',{ip:n},function(data){}).done(function(){
                 $("#capturar"+n).append('<img src="images/graph/control_aules/captura'+n+'.png" />');
 		});
 }
 
+
+function capturarSolo(n){
+  $.get('capturar.php',{ip:n},function(data){}).done(function(){console.log(n)});
+}
+
+function capturarMapa(){
+console.log('capturar');
+for(i=101;i<125;i++){
+ if(clients[i]['on']==1) {
+	console.log("capturant: "+i);
+	capturarSolo(i);
+ }
+}
+setTimeout(capturarMapa, 60000);
+f_mapa();
+}
+/*
 function capturartots(){
    $("#captures").html('<span>Captures:</span>');
   $("#panel ul li").each(function(i){
@@ -269,8 +336,8 @@ $(this).attr("src","images/alert.png").css("height","100px");;
 $(document).on("error","img", function() {
     $(this).hide();
     $("#error").show();
-});
-
+});*/
+////////////////////////////////////////////////////////////ADMINSTRACIO//////////////////////////////
 function apagar(id){
   n=id.substring(6);
   $.get('apagar.php',{ip:n},function(data){console.log(data);}).done(function(){
@@ -287,6 +354,13 @@ n=id.substring(6);
 
 /*
 TODO:
+
+Wakeonlan
+
+ansible
+
+bloquear desde cliente
+
 
 Gràfics dels clients més actius
 
