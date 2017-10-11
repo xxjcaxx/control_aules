@@ -12,33 +12,25 @@ ipeth2=0;
 
 function obtener_datos(){
 	var array;
-
 	for(i=1;i<255;i++){
 	clients[i]={'on':0};
 	}
-
-        ///console.log(clients);
-	$.get('pcs.php',{opt:"solo_ips",arp:'no'},function(data){
+	$.get('pcs.php',{opt:"solo_ips"},function(data){
            	array = data.split(';');
-         //	console.log(array);
 		for(i=0;i<array.length;i++){
 			clients[array[i].split('.')[3]]['on']=1;
 		}
-        //console.log(clients);
         });
 
 }
 
 function get_pcs(){
-
-                var $arp=0;
-		$.get('pcs.php',{ opt: "actualitzar",arp: $arp },function(data){
+		$.get('pcs.php',{ opt: "actualitzar"},function(data){
 				$("#panel").html("<span>Llista de clients:</span>");
 				$("#panel").append(data);
 				}).done(function(){                             
 					f_pcs();
                                 	obtener_datos();
-                                       // updaten();
                 			$.get('mapa.php',function(data){
 						$("#panel").append(data);
 					}).done(function(){f_mapa();}); 
@@ -49,10 +41,6 @@ function get_pcs(){
 
 // El botó d'actualitzar clients
 $(document).on("click","#act_clients",function(event){
-	//	refrescar();
-                var $arp=0;
-                if($("#arp").is(':checked')) {$arp=1;}
-
 		$("#panel").html('<img src="images/loading.gif"/>');
                 get_pcs();
 		});
@@ -77,16 +65,12 @@ function refrescar(){
 				$("#actual").append(data);
 				}).done(function(){
 
-
 		                $("#panel").html('<img src="images/loading.gif"/>');
 				get_pcs();
                                 $("#actual pre").hide();
 				$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
 				});
-                 
-
 }
-
 
 // Inici del document on carrega tots els divs
 $(function(){
@@ -151,16 +135,11 @@ function f_pcs(){
 			$(this).on("click", function(event){
 				mostrar_acct($(this),ip.substring(1));
 			});
-
-			
-
 	});
-
 
 			// mostrar la tortuga
 			if($("#actual").text().indexOf('noqueue') < 0 ){
 				turtle('put');
-
 				}
 }
 
@@ -168,7 +147,7 @@ function f_mapa(){
         var t = Math.random()
 	for(i=101;i<125;i++){
 		if(clients[i]['on']==1){
-			$('#mapa_pantalla_'+i).css({'background-color':'#1ABC9C','background-image':'url("images/graph/control_aules/captura'+i+'.png?'+t+'")','background-size': 'contain'}).html('<span class="mapa_pc_numero">'+i+'</span>') ;
+			$('#mapa_pantalla_'+i).css({'background-color':'#1ABC9C','background-image':'url("images/graph/control_aules/captura'+i+'.jpg?'+t+'")','background-size': 'contain'}).html('<span class="mapa_pc_numero">'+i+'</span>') ;
                         //console.log(i); 
 		}
 	}
@@ -270,7 +249,7 @@ function mostrar_acct($linea,ip){
 		console.log("Acct: "+ip);
 
 			$linea.append('<span class="consum">Consum: in: '+data[ip]['in']+' out: '+data[ip]['out']+' <img  class="graph" src="images/graph/control_aules/spd'+n[3]+'.png"/></span>');
-                	$linea.after('<a class="acaptura" id="image'+n[3]+'" href="images/graph/control_aules/captura'+n[3]+'.png" target="_blank"><span class="capturar" id="capturar'+n[3]+'"></span></a>');
+                	$linea.after('<a class="acaptura" id="image'+n[3]+'" href="images/graph/control_aules/captura'+n[3]+'.jpg" target="_blank"><span class="capturar" id="capturar'+n[3]+'"></span></a>');
                		 capturar(n[3]);
 		});
                 $linea.find('img.bloquea').after('<img src="images/apagar.svg" id="apagar'+n[3]+'" class="apaga" />');
@@ -296,7 +275,7 @@ function mostrar_acct($linea,ip){
 
 function capturar(n){
   $.get('capturar.php',{ip:n},function(data){}).done(function(){
-                $("#capturar"+n).append('<img src="images/graph/control_aules/captura'+n+'.png" />');
+                $("#capturar"+n).append('<img src="images/graph/control_aules/captura'+n+'.jpg" />');
 		});
 }
 
@@ -316,27 +295,9 @@ for(i=101;i<125;i++){
 setTimeout(capturarMapa, 60000);
 f_mapa();
 }
-/*
-function capturartots(){
-   $("#captures").html('<span>Captures:</span>');
-  $("#panel ul li").each(function(i){
-        var n=$(this).attr('id').substring(1).split(".")[3];
-        if(n>=100 && n<200){
-        var ipn=$(this).attr('id').substring(1);
-  	$.get('capturar.php',{ip:n},function(data){}).done(function(){
-                $("#captures").append('<div class="capturas"><a target="_blank" id="capturas'+n+'" href="images/graph/control_aules/captura'+n+'.png"></a>IP: '+ipn+'</div>');
-                var newcaptura = $("<img>").attr("src","images/graph/control_aules/captura"+n+".png").attr("id","imgcapturas"+n).on("error",function(){
-$(this).attr("src","images/alert.png").css("height","100px");;
-});
-              $("#capturas"+n).append(newcaptura);  
-});
-}
-       });
-}
-$(document).on("error","img", function() {
-    $(this).hide();
-    $("#error").show();
-});*/
+
+
+
 ////////////////////////////////////////////////////////////ADMINSTRACIO//////////////////////////////
 function apagar(id){
   n=id.substring(6);
