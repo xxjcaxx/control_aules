@@ -24,8 +24,8 @@ function obtener_datos(){
 
 }
 
-function get_pcs(){
-		$.get('pcs.php',{ opt: "actualitzar"},function(data){
+function get_pcs(act){
+		$.get('pcs.php',{ opt: act},function(data){
 				$("#panel").html("<span>Llista de clients:</span>");
 				$("#panel").append(data);
 				}).done(function(){                             
@@ -33,30 +33,30 @@ function get_pcs(){
                                 	obtener_datos();
                 			$.get('mapa.php',function(data){
 						$("#panel").append(data);
-					}).done(function(){f_mapa();}); 
+					}).done(function(){f_mapa();});
 					});
 
 }
 
 
 // El botó d'actualitzar clients
-$(document).on("click","#act_clients",function(event){
-		$("#panel").html('<img src="images/loading.gif"/>');
-                get_pcs();
-		});
+$(document).on("click","#act_clients",function(event){ l(); get_pcs("actualitzar");	});
 
 //el Logo de control d'aula
 $(document).on("click","#control",function(event){ refrescar();});
 
 // El logo de totes les aules
 $(document).on("click","#totes",function(event){
-		$("#panel").html('<img src="images/loading.gif"/>');
+                l();
 		$.get('totes.php', function(data){
 				$("#panel").html("<span>Totes les aules</span>");
 				$("#panel").append(data);
 				}).done(function(){                             
 					}); 
 		});
+// El gif de loading
+function l(){ $("#panel").html('<img src="images/loading.gif"/>');}
+
 
 // Refrescar IPtables i Llista de clients
 function refrescar(){
@@ -65,8 +65,8 @@ function refrescar(){
 				$("#actual").append(data);
 				}).done(function(){
 
-		                $("#panel").html('<img src="images/loading.gif"/>');
-				get_pcs();
+		                l();
+				get_pcs("");
                                 $("#actual pre").hide();
 				$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
 				});
@@ -74,7 +74,7 @@ function refrescar(){
 
 // Inici del document on carrega tots els divs
 $(function(){
-                refrescar();
+                l(); refrescar();
                  // mestres se carrega tot, podem anar donant funcionalitat als botons:
                 $("#btots").on("click",function(event){bloquear('btots');});
                 $("#dtots").on("click",function(event){bloquear('dtots');});
@@ -158,15 +158,14 @@ function f_mapa(){
 ///////////////////////// BLOQUEAR ///////////////////////////////////////
 
 function bloquear(ip){
-        
-	$("#panel").html('<img src="images/loading.gif"/>');
+        l();        
 	$.get('bloquear.php',{ip:ip},function(data){}).done(function(){
         refrescar();
 	 }); 
 	} 
 function desbloquear(ip){
-	$("#panel").html('<img src="images/loading.gif"/>');
-	$.get('bloquear.php',{ipd:ip},function(data){}).done(function(){
+	l();
+        $.get('bloquear.php',{ipd:ip},function(data){}).done(function(){
         refrescar();
 	 });
 	} 
@@ -177,7 +176,7 @@ function desbloquear(ip){
 function slow(){
 
  if($('.turtle').length == 0) {
-
+        l();
 	var velocitat = $('#velocitat').val();
 	$.get('slow.php',{v:velocitat},function(data){}).done(function(){console.log('Lent'); refrescar(); });
        // turtle('put');
@@ -198,7 +197,7 @@ if(act=='del'){
 }
 
 function reset(){
-       
+        l();
 	$.get('reset.php',function(data){}).done(function(){console.log('Reset'); 
                  $('.turtle').each(function(i){$(this).remove();}); 
                  refrescar();
