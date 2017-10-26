@@ -282,15 +282,22 @@ function capturar(n){
 function capturarSolo(n){
   $.get('capturar.php',{ip:n},function(data){}).done(function(){console.log(n)});
 }
+function capturarTodos(t){
+  $.get('capturar.php',{targets:t},function(data){}).done(function(){console.log(t)});
+}
 
 function capturarMapa(){
-console.log('capturar');
+//console.log('capturar');
+targets=""
 for(i=101;i<125;i++){
  if(clients[i]['on']==1) {
 	console.log("capturant: "+i);
+        targets=targets+" "+i;
 	capturarSolo(i);
  }
 }
+console.log(targets);
+//capturarTodos(targets);
 setTimeout(capturarMapa, 60000);
 f_mapa();
 }

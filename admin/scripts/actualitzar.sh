@@ -10,6 +10,8 @@ echo "$ips" | while read line
 do
 read cip cin cout <<< $line
 #echo $line $cip $cin $cout
+cin=$(($cin*8))
+cout=$(($cout*8))
 cip=$(echo $cip | cut -d"." -f4)
 rrdtool update /var/lib/control_aules/client$cip.rrd $(date +%s):$cin:$cout
 rrdtool graph /var/lib/control_aules/spd$cip.png --start -6h --end $(date +%s) DEF:sin=/var/lib/control_aules/client$cip.rrd:in:AVERAGE CDEF:kbin=sin,1024,\/ LINE1:kbin\#FF0000:"in" DEF:sout=/var/lib/control_aules/client$cip.rrd:out:AVERAGE CDEF:kbout=sout,1024,\/ LINE1:kbout\#00FF00:"out"
