@@ -87,7 +87,11 @@ $alternateIP = exec ($command);
 			</div>
 			<div id="panel"> </div>
 			<div id="estadistiques">
+     				2 Hores:
+				<div id="estadistiques_hora"></div>
+     				6 Hores:
 				<div id="estadistiques_hui"></div>
+     				6 dies:
 				<div id="estadistiques_setmana"></div>
 			 </div>
 		</div>
