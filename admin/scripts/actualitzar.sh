@@ -27,8 +27,10 @@ color=$(echo "$colors" | sed -n "$color p")
 [[ $ip -lt 200 ]] && args=$args" DEF:sin$ip=/var/lib/control_aules/client$ip.rrd:in:AVERAGE CDEF:kbin$ip=sin$ip,1024,/ LINE1:kbin$ip$color:\"192.168.x.$ip\""
 done < /tmp/ips
 
+rrdtool graph /var/lib/control_aules/total5minuts.png --start -11m --end $(date +%s) $args
 rrdtool graph /var/lib/control_aules/totalhora.png --start -2h --end $(date +%s) $args
-rrdtool graph /var/lib/control_aules/total.png --start -6h --end $(date +%s) $args
+rrdtool graph /var/lib/control_aules/total.png --start -6h --end $(date +%s) --alt-autoscale-max ${args//AVERAGE/AVERAGE:step=180} 
+#echo ${args//AVERAGE/AVERAGE:step=6000}
 rrdtool graph /var/lib/control_aules/totalsemana.png --start -6d --end $(date +%s) $args
 
 
