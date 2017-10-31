@@ -75,14 +75,15 @@ $alternateIP = exec ($command);
 		</div>
 		<div id="derecha">
 			<div id="net">
-				<div class="nic" id="eth0in"><span class="nic">eth2<br/>In:</span>
+			<!--	<div class="nic" id="eth0in"><span class="nic">eth2<br/>In:</span>
 					<span class="line"></span>
 					<span id="min" class="max">100</span>
 				</div>
 				<div class="nic" id="eth0out"><span class="nic">eth2<br/>Out:</span>
 					<span class="line"></span>
 					<span id="mout" class="max">100</span>
-				</div>
+				</div> -->
+				<img id="graphxarxa" src="images/graph/output.png"/>
 				<div style="clear:both;"></div>
 			</div>
 			<div id="panel"> </div>

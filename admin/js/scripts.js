@@ -85,7 +85,7 @@ $(function(){
 		grafics = $(".line").peity("line",{'height':'50px','width':'200px'});
 		updaten();
                  
-                $('#eth0in').on("click",function(event){grafiques();});
+                $('#net').on("click",function(event){grafiques();});
                 // http://benpickles.github.io/peity/#pie-charts
                  
                 // dades fonamentals
@@ -138,9 +138,11 @@ function f_pcs(){
 	});
 
 			// mostrar la tortuga
-			if($("#actual").text().indexOf('noqueue') < 0 ){
+			if($("#actual").text().indexOf('hashlimit') > 0 ){
+                                console.log('tortuga');
 				turtle('put');
 				}
+                        //else {console.log($('#actual').text())}
 }
 
 function f_mapa(){
@@ -235,10 +237,8 @@ function updaten() {
 }
 
 function grafiques(){
-	if($("#graphxarxa").length == 0) $("#net").append('<img id="graphxarxa" src="images/graph/output.png"/>');
-	else $("#graphxarxa").remove();
-	if($("#graphtotal").length == 0) $("#net").append('<p id="graphtotal"><img src="images/graph/control_aules/total.png"/><img src="images/graph/control_aules/totalsemana.png"/></p>');
-	else $("#graphtotal").remove();
+	if($("#graphxarxa").length == 0) { $("#net").append('<img id="graphxarxa" src="images/graph/output.png"/>'); $("#mostrarg").remove(); }
+	else { $("#graphxarxa").remove(); $("#net").append('<span id="mostrarg">V</span>'); }
 }
 
 function mostrar_acct($linea,ip){
