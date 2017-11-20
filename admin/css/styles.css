@@ -157,20 +157,41 @@ width:225px;
 }
 
 
-#velocitat{
+#velocitat, #streaming, #banmode, #burst{
 font-size:10px;
+width: 110px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  -webkit-appearance: none;
+ -moz-appearance: textfield;
+  appearance: textfield;
 }
-
-#accions span.accio{
+#accions span.accio {
+background-color: #2A3F54;
+display:block;
+color:#eee;
+padding: 3px 10px 3px 10px;
+font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+font-size:12px;
+border-bottom:1px solid #2A2F34;
+border-top:1px solid #2A3F54;
+cursor: pointer;
+} 
+#accions span.acciof{
 background-color: #2A3F54;
 display:block;
 color:#eee;
 padding: 0px 10px 0px 10px;
 font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
-font-size:12px;
+font-size:11px;
 border-bottom:1px solid #2A3F54;
 border-top:1px solid #2A3F54;
-cursor: pointer;
+}
+#accions span label{
+width: 65px;
+display: block;
+float: left;
 } 
 #accions span.accio:hover{
 border-bottom:1px solid #1F2F3F;

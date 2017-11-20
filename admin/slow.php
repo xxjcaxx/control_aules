@@ -5,7 +5,13 @@ if($_SESSION['user']=='lliurex'){
 if(isset($_GET['v'])){
 
 $vel=$_GET['v'];
-$burst=($vel/1000)+1;
+$streaming=$_GET['s'];
+$tipo=$_GET['tipo'];
+$burst=$_GET['l'];
+$mode=$_GET['m'];
+
+$res = exec('sudo /bin/bash /var/www/html/admin/scripts/slow.sh '.$vel.' '.$streaming.' '.$tipo.' '.$burst.' '.$mode);
+/*$burst=($vel/1000)+1;
 
 $res = exec('sudo ip route change default via 10.20.0.1 dev eth2');
 
@@ -15,6 +21,7 @@ $res = exec('sudo iptables -I FORWARD -m hashlimit --hashlimit-above '.$vel.'kb/
 $res = exec('sudo ip route add 5.145.174.124 via 10.20.0.1 dev eth0');
 $res = exec('sudo ip route add 192.168.80.0/24 via 10.20.0.1 dev eth0');
 $res = exec('sudo ip route add 172.27.0.0/16 via 10.20.0.1 dev eth0');
+*/
 }
 }
 ?>

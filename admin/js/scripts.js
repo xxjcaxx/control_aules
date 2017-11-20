@@ -61,16 +61,20 @@ function l(){ $("#panel").html('<img src="images/loading.gif"/>');}
 // Refrescar IPtables i Llista de clients
 function refrescar(){
 		$.get('iptables.php',function(data){
-				$("#actual").html("<span>resultat de IPtables:</span>");
+				$("#actual").html('<span id="resiptables">Resultat de IPtables:</span>');
 				$("#actual").append(data);
+                                $("#actual").append('<span id="resipadv">Monitor QoS</span>');
 				}).done(function(){
 
 		                l();
 				get_pcs("");
                                 $("#actual pre").hide();
-				$("#actual span").on("click",function(event){$("#actual pre").toggle(400);});
+                                $("#actual span#resipadv").hide();
+				$("#actual span#resiptables").on("click",function(event){$("#actual pre").toggle(400);$("#actual #resipadv").toggle(400);});
 				});
 }
+// Mostrar coses de QoS
+$(document).on("click","#actual span#resipadv",function(event){ console.log('QoS'); monitorQoS();});
 
 // Inici del document on carrega tots els divs
 $(function(){
@@ -78,7 +82,8 @@ $(function(){
                  // mestres se carrega tot, podem anar donant funcionalitat als botons:
                 $("#btots").on("click",function(event){bloquear('btots');});
                 $("#dtots").on("click",function(event){bloquear('dtots');});
-                $("#ralentir").on("click",function(event){slow();});
+                $("#ralentir").on("click",function(event){slow(tipo='r');});
+                $("#qos").on("click",function(event){slow(tipo='qos');});
                 $("#reset").on("click",function(event){reset();});
     //            $("#capturartots").on("click",function(event){capturartots();});
 
@@ -175,12 +180,15 @@ function desbloquear(ip){
 
 ///////////////////////// RALENTIR /////////////////////
 
-function slow(){
+function slow(tipo){
 
  if($('.turtle').length == 0) {
         l();
 	var velocitat = $('#velocitat').val();
-	$.get('slow.php',{v:velocitat},function(data){}).done(function(){console.log('Lent'); refrescar(); });
+	var streaming = $('#streaming').val();
+	var burst = $('#burst').val();
+	var mode = $('#banmode').val();
+	$.get('slow.php',{v:velocitat,s:streaming,l:burst,m:mode,tipo:tipo},function(data){}).done(function(){console.log('Lent'); refrescar(); });
        // turtle('put');
 	}
 
@@ -294,11 +302,11 @@ for(i=101;i<125;i++){
  if(clients[i]['on']==1) {
 	console.log("capturant: "+i);
         targets=targets+" "+i;
-	capturarSolo(i);
+//	capturarSolo(i);
  }
 }
 console.log(targets);
-//capturarTodos(targets);
+capturarTodos(targets);
 setTimeout(capturarMapa, 60000);
 f_mapa();
 }
@@ -319,6 +327,21 @@ n=id.substring(6);
 
 });
 }
+
+
+/////////////////////////////////////////////MONITOR AVANÇAT ///////////////////////////////////////
+
+
+function monitorQoS(){
+ $.get('monitorqos.php',function(data){
+                                $("#actual").html('<span id="resiptables">Resultat de IPtables:</span>');
+                                $("#actual").append(data);
+                                $("#actual").append('<span id="resipadv">Monitor QoS</span>');
+                                });
+
+}
+
+
 
 /*
 TODO:

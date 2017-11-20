@@ -56,8 +56,17 @@ $alternateIP = exec ($command);
 			<h1 id="control">Control d'Aula</h1>
 			<span class="accio" id="btots">Bloquejar a tots</span>
 			<span class="accio" id="dtots">Desbloquejar a tots</span>
-			<span class="accio" id="ralentir">Ralentir Internet als alumnes<input type="number" id="velocitat" value="3000"/></span>
-			<span class="accio" id="reset">Velocitat estandard per a tots</span>
+			<span class="accio" id="ralentir">Velocitat molt lenta</span>
+			<span class="acciof" id="qosf">QoS:</br>
+			<label>http\https:</label><input type="number" id="velocitat" value="1000"/>KB/s </br>
+			<label>Streaming:</label> <input type="number" id="streaming" value="60"/>KB/s </br>
+			<label>Límit:</label> <input type="number" id="burst" value="10"/>MB </br>
+			<label>Mode:</label> <select name="mode" id="banmode">
+				  <option value="ban">1 Banejar tot als que abusen</option>
+				  <option value="streaming">2 Banejar Streaming als que abusen</option>
+				</select></span>
+			<span class="accio" id="qos">Aplicar QoS</span>
+			<span class="accio" id="reset">Velocitat sense límit</span>
 <!--			<span class="accio" id="capturartots">Capturar a tots</span>-->
 			<h1 style="font-size:1em;" id="totes">Totes les aules</h1>
                         <span class="accio"><a href="https://10.20.8.254/admin">2DAM-ASIX</a></span>

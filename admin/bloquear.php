@@ -9,7 +9,7 @@ if($_GET['ip']=='dtots'){ // Bloquejar a tots
 	//-m iprange --src-range 192.168.1.100-192.168.1.200
 	for($i=101;$i<200;$i++){
 		$res = exec('sudo iptables -D FORWARD -s '.$prefijo.'.'.$i.' -j DROP'); 
-		$res = exec('sudo ssh -o "ConnectTimeout=10" -o "StrictHostKeyChecking no" root@'.$prefijo.'.'.$i.' iptables -A INPUT -s '.$prefijo.'.0/25 -j DROP');
+//		$res = exec('sudo ssh -o "ConnectTimeout=10" -o "StrictHostKeyChecking no" root@'.$prefijo.'.'.$i.' iptables -A INPUT -s '.$prefijo.'.0/25 -j DROP');
 		//echo $i."\n";
 		}
 	for($i=1;$i<99;$i++){
@@ -23,7 +23,7 @@ if($_GET['ip']=='btots'){
 	//-m iprange --src-range 192.168.1.100-192.168.1.200
 	for($i=101;$i<200;$i++){
 		$res = exec('sudo iptables -I FORWARD 1 -s '.$prefijo.'.'.$i.' -j DROP'); 
-		$res = exec('sudo ssh -o "ConnectTimeout=10" -o "StrictHostKeyChecking no" root@'.$prefijo.'.'.$i.' iptables -D INPUT -s '.$prefijo.'.0/25 -j DROP');
+//		$res = exec('sudo ssh -o "ConnectTimeout=10" -o "StrictHostKeyChecking no" root@'.$prefijo.'.'.$i.' iptables -D INPUT -s '.$prefijo.'.0/25 -j DROP');
 		//echo $i."\n";
 		}
 	for($i=1;$i<99;$i++){
