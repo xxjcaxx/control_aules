@@ -1,7 +1,31 @@
 #!/bin/bash
+#
+# Aquest script és cridat cada minut per actualitzar la informació dels gràfics de xarxa i altres coses.
+#
 
-ipin=$(/sbin/iptables -L TRAFFIC_ACCT_IN -x -n -v | grep '192.168.' | awk '{ print $8" "$2}')
-ipout=$(/sbin/iptables -L TRAFFIC_ACCT_OUT -x -n -v | grep '192.168.' | awk '{ print $2}')
+####################### Traure tot el tràfic de cada client
+/sbin/iptables -L TRAFFIC_ACCT_IN -n -v -x > /tmp/clients_in.tmp
+/sbin/iptables -L TRAFFIC_ACCT_OUT -n -v -x > /tmp/clients_out.tmp
+
+####################### Generar un json amb les dades de consum per IP
+echo '{' > /tmp/ips_acct
+while read ip
+do
+coma=','
+[[ $ip == *254 ]] && coma=''
+bytesin=$(grep "$ip " /tmp/clients_in.tmp | tr -s " " | cut -d" " -f3 )
+bitsin=$((${bytesin:-0}*8)) 
+bytesout=$(grep "$ip " /tmp/clients_out.tmp | tr -s " " | cut -d" " -f3 )
+bitsout=$((${bytesout:-0}*8)) 
+#echo '"'$ip'": {"in": "'${bytesin:-0}'", "out": "'${bytesout:-0}'"}'$coma >> /tmp/ips_acct
+echo '"'$ip'": {"in": "'${bitsin:-0}'", "out": "'${bitsout:-0}'"}'$coma >> /tmp/ips_acct
+done < /tmp/ips
+echo '}' >> /tmp/ips_acct
+
+
+######################## Generar gràfics de consum per IP
+ipin=$(cat /tmp/clients_in.tmp | grep '192.168.' | awk '{ print $8" "$2}')
+ipout=$(cat /tmp/clients_out.tmp | grep '192.168.' | awk '{ print $2}')
 
 ips=$(paste -d " " <(echo "$ipin") <(echo "$ipout"))
 
@@ -16,6 +40,9 @@ cip=$(echo $cip | cut -d"." -f4)
 rrdtool update /var/lib/control_aules/client$cip.rrd $(date +%s):$cin:$cout
 rrdtool graph /var/lib/control_aules/spd$cip.png --start -3h --end $(date +%s) DEF:sin=/var/lib/control_aules/client$cip.rrd:in:AVERAGE CDEF:kbin=sin,1024,\/ LINE1:kbin\#FF0000:"in" DEF:sout=/var/lib/control_aules/client$cip.rrd:out:AVERAGE CDEF:kbout=sout,1024,\/ LINE1:kbout\#00FF00:"out"
 done
+
+
+######################## Generar gràfics de consum general
 
 args=""
 colors=$(cat /var/www/html/admin/images/graph/colors)
@@ -34,13 +61,13 @@ rrdtool graph /var/lib/control_aules/total.png --start -6h --end $(date +%s) --a
 rrdtool graph /var/lib/control_aules/totalsemana.png --start -6d --end $(date +%s) $args
 
 
-# calcular el nmap cada vegada. 
-/usr/bin/whoami > /tmp/dolarclients
-/var/www/html/admin/scripts/clients.sh >> /tmp/dolarclients
+# calcular el nmap cada vegada
+
+/bin/bash /var/www/html/admin/scripts/clients.sh &>> /tmp/dolarclients
+/bin/bash /var/www/html/admin/scripts/graph.sh &>> /tmp/dolarclients
+
+# Capturar
+
+/bin/bash /var/www/html/admin/scripts/capturartots.sh &>> /tmp/dolarclients
 
 
-
-
-#rrdtool graph /var/lib/control_aules/total.png --start -6h --end $(date +%s) DEF:sin22=/var/lib/control_aules/client22.rrd:in:AVERAGE LINE1:sin22\#FF0000
-#echo $(date) >> /tmp/actualitzar
-#echo $(date) >> actualitzar.log

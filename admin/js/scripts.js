@@ -100,6 +100,7 @@ $(function(){
                 ipeth2=$("#ipeth2").text();
                
 		capturarMapa();
+		
 		});
 
 // Funció per a donar color i format als clients
@@ -218,26 +219,28 @@ function reset(){
 /////////////////////////////// GRAFIQUES /////////////////
 
 function updaten() {
-	  $.get("xarxa.php",{q:'in'}, function(data) {
-		      $("#eth0in span.line").html(data);
-                      grafics.change();
-                      var arr = data.split(',');
-                      var max = Math.max(...arr);
-                      $('#min').html(max);
+	
+
+	 // $.get("xarxa.php",{q:'in'}, function(data) {
+	//	      $("#eth0in span.line").html(data);
+          //            grafics.change();
+            //          var arr = data.split(',');
+              //        var max = Math.max(...arr);
+                //      $('#min').html(max);
                   //    $("#eth0in")
 		          window.setTimeout(updaten, 60000);
-		      });
-	  $.get("xarxa.php",{q:'out'}, function(data) {
-		      $("#eth0out span.line").html(data);
+		  //    });
+	  //$.get("xarxa.php",{q:'out'}, function(data) {
+	/*	      $("#eth0out span.line").html(data);
                       grafics.change();
 
                       var arr = data.split(',');
                       var max = Math.max(...arr);
                       $('#mout').html(max);
-		      });
+		      });*/
 		//if($("#graphxarxa").length > 0) 
 		 $("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
-		 $("#graphtotal").attr('src', $("#graphtotal").attr('src')+'?'+Math.random());
+		// $("#graphtotal").attr('src', $("#graphtotal").attr('src')+'?'+Math.random());
                  $("#estadistiques_hora").html('10 Minuts: <img src="images/graph/control_aules/total5minuts.png?'+Math.random()+'"/> 2 hores: <img src="images/graph/control_aules/totalhora.png?'+Math.random()+'"/>');
                  $("#estadistiques_hui").html('<img src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
 
@@ -300,13 +303,14 @@ function capturarMapa(){
 targets=""
 for(i=101;i<125;i++){
  if(clients[i]['on']==1) {
-	console.log("capturant: "+i);
+//	console.log("capturant: "+i);
         targets=targets+" "+i;
 //	capturarSolo(i);
  }
 }
 console.log(targets);
-capturarTodos(targets);
+//capturarTodos(targets);
+$.get('observar.php');
 setTimeout(capturarMapa, 60000);
 f_mapa();
 }
