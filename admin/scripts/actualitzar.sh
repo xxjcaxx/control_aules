@@ -63,11 +63,11 @@ rrdtool graph /var/lib/control_aules/totalsemana.png --start -6d --end $(date +%
 
 # calcular el nmap cada vegada
 
-/bin/bash /var/www/html/admin/scripts/clients.sh &>> /tmp/dolarclients
-/bin/bash /var/www/html/admin/scripts/graph.sh &>> /tmp/dolarclients
+/bin/bash /var/www/html/admin/scripts/clients.sh 
+/bin/bash /var/www/html/admin/scripts/graph.sh 
 
 # Capturar
 
-/bin/bash /var/www/html/admin/scripts/capturartots.sh &>> /tmp/dolarclients
+/bin/bash /var/www/html/admin/scripts/capturartots.sh 
 
 

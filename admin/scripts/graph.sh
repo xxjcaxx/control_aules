@@ -32,8 +32,7 @@ count=$(($count+1))
 done < /tmp/eth1.tmp
 
 ## Fin de mitjanes
-gnuplot < /var/www/html/admin/plot.plot &>> /tmp/dolarclients 
-echo 'graph' >> /tmp/dolarclients
+gnuplot < /var/www/html/admin/plot.plot  
 #iptables -L TRAFFIC_ACCT_IN -n -v -x > /tmp/clients_in.tmp
 #iptables -L TRAFFIC_ACCT_OUT -n -v -x > /tmp/clients_out.tmp
 
