@@ -15,27 +15,34 @@ function obtener_datos(){
 	for(i=1;i<255;i++){
 	clients[i]={'on':0};
 	}
-	$.get('pcs.php',{opt:"solo_ips"},function(data){
+     return $.get('pcs.php',{opt:"solo_ips"},function(data){
            	array = data.split(';');
 		for(i=0;i<array.length;i++){
 			clients[array[i].split('.')[3]]['on']=1;
+			clients[array[i].split('.')[3]]['ip']=array[i];
 		}
         });
-
+    
 }
 
 function get_pcs(act){
-		$.get('pcs.php',{ opt: act},function(data){
-				$("#panel").html("<span>Llista de clients:</span>");
-				$("#panel").append(data);
-				}).done(function(){                             
-					f_pcs();
-                                	obtener_datos();
-                			$.get('mapa.php',function(data){
-						$("#panel").append(data);
-					}).done(function(){f_mapa();});
-					});
+	$.when(obtener_datos()).done(function(x){
+	$("#panel").html("<span>Llista de clients:</span>");
+	$("#panel").append('<div id="clients"></div>');
+	$("#clients").append('<ul id="ul_clients"></ul>');
+	for(i=1;i<255;i++){
+		if(clients[i]['on']==1){
+			$("#ul_clients").append('<li id="c'+clients[i]['ip']+'"><span>'+clients[i]['ip']+'</span>');
+		}
+	}
+	$("#clients").append('<div><button type="button" id="act_clients">Actualitzar clients</button></div>');
+	f_pcs();
+      	$.get('mapa.php',function(data){
+		$("#panel").append(data);
+	}).done(function(){f_mapa();});
 
+	});
+	return 1;
 }
 
 
@@ -78,7 +85,7 @@ $(document).on("click","#actual span#resipadv",function(event){ console.log('QoS
 
 // Inici del document on carrega tots els divs
 $(function(){
-                l(); refrescar();
+                l(); //refrescar();
                  // mestres se carrega tot, podem anar donant funcionalitat als botons:
                 $("#btots").on("click",function(event){bloquear('btots');});
                 $("#dtots").on("click",function(event){bloquear('dtots');});
@@ -87,7 +94,7 @@ $(function(){
                 $("#reset").on("click",function(event){reset();});
     //            $("#capturartots").on("click",function(event){capturartots();});
 
-		grafics = $(".line").peity("line",{'height':'50px','width':'200px'});
+//		grafics = $(".line").peity("line",{'height':'50px','width':'200px'});
 		updaten();
                  
                 $('#net').on("click",function(event){grafiques();});
@@ -102,6 +109,7 @@ $(function(){
 		capturarMapa();
 		
 		});
+
 
 // Funció per a donar color i format als clients
 function f_pcs(){
@@ -157,7 +165,13 @@ function f_mapa(){
 		if(clients[i]['on']==1){
 			$('#mapa_pantalla_'+i).css({'background-color':'#1ABC9C','background-image':'url("images/graph/control_aules/captura'+i+'.jpg?'+t+'")','background-size': 'contain'}).html('<span class="mapa_pc_numero">'+i+'</span>') ;
                         //console.log(i); 
-		}
+		} else {
+			$('#mapa_pantalla_'+i).html('<img src="images/apagar.svg" id="wol'+i+'" class="wol" />')
+	                $('#wol'+i).on('click',function(event){
+				wol($(this).attr('id'));
+                	 });
+
+			}
 	}
 
 }
@@ -219,32 +233,13 @@ function reset(){
 /////////////////////////////// GRAFIQUES /////////////////
 
 function updaten() {
-	
-
-	 // $.get("xarxa.php",{q:'in'}, function(data) {
-	//	      $("#eth0in span.line").html(data);
-          //            grafics.change();
-            //          var arr = data.split(',');
-              //        var max = Math.max(...arr);
-                //      $('#min').html(max);
-                  //    $("#eth0in")
-		          window.setTimeout(updaten, 60000);
-		  //    });
-	  //$.get("xarxa.php",{q:'out'}, function(data) {
-	/*	      $("#eth0out span.line").html(data);
-                      grafics.change();
-
-                      var arr = data.split(',');
-                      var max = Math.max(...arr);
-                      $('#mout').html(max);
-		      });*/
-		//if($("#graphxarxa").length > 0) 
-		 $("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
-		// $("#graphtotal").attr('src', $("#graphtotal").attr('src')+'?'+Math.random());
-                 $("#estadistiques_hora").html('10 Minuts: <img src="images/graph/control_aules/total5minuts.png?'+Math.random()+'"/> 2 hores: <img src="images/graph/control_aules/totalhora.png?'+Math.random()+'"/>');
-                 $("#estadistiques_hui").html('<img src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
-
-                 $("#estadistiques_setmana").html('<img src="images/graph/control_aules/totalsemana.png?'+Math.random()+'"/>');
+	window.setTimeout(updaten, 60000);
+	$("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
+        $("#estadistiques_hora").html('10 Minuts:</br> <img src="images/graph/control_aules/total5minuts.png?'+Math.random()+'"/></br> 2 hores: </br><img src="images/graph/control_aules/totalhora.png?'+Math.random()+'"/></br>');
+        $("#estadistiques_hui").html('<img src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
+        $("#estadistiques_setmana").html('<img src="images/graph/control_aules/totalsemana.png?'+Math.random()+'"/>');
+        refrescar();
+	//get_pcs("");
 }
 
 function grafiques(){
@@ -261,6 +256,7 @@ function mostrar_acct($linea,ip){
 
 			$linea.append('<span class="consum">Consum: in: '+data[ip]['in']+' out: '+data[ip]['out']+' <img  class="graph" src="images/graph/control_aules/spd'+n[3]+'.png"/></span>');
                 	$linea.after('<a class="acaptura" id="image'+n[3]+'" href="images/graph/control_aules/captura'+n[3]+'.jpg" target="_blank"><span class="capturar" id="capturar'+n[3]+'"></span></a>');
+		//	$linea.after('<input type="text" name="proces" id="proces'+n[3]+'" value="Proces"></input>');
                		 capturar(n[3]);
 		});
                 $linea.find('img.bloquea').after('<img src="images/apagar.svg" id="apagar'+n[3]+'" class="apaga" />');
@@ -278,6 +274,7 @@ function mostrar_acct($linea,ip){
                 $("#capturar"+n[3]).remove();
                 $linea.find('img.apaga').remove();
                 $linea.find('img.notifica').remove();
+                $('#proces'+n[3]).remove();
 	     }
 
 }
@@ -323,6 +320,11 @@ function apagar(id){
   $.get('apagar.php',{ip:n},function(data){console.log(data);}).done(function(){
 });
 }
+function wol(id){
+  n=id.substring(3);
+  $.get('wol.php',{ip:n},function(data){console.log(data);}).done(function(){
+});
+}
 
 function notificar(id){
 
@@ -344,7 +346,6 @@ function monitorQoS(){
                                 });
 
 }
-
 
 
 /*

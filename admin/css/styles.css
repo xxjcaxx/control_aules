@@ -30,8 +30,8 @@ border-bottom:2px solid #e6e9ed;
 }
 
 
-#estadistiques>span{
-font-size:24px;
+#estadistiques {
+font-size:10px;
 color:#73879c;
 font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
 display:block;
@@ -224,12 +224,12 @@ padding: 0px 10px 0px 10px;
  
 #derecha{
 flex:1 ;
-padding:10px;
+padding:1px;
 }
 #net {
 background-color:#FFF;
 border:1px solid #e6e9ed;
-margin-bottom:10px;
+margin-bottom:0px;
 padding:10px;
 }
 #net div.nic{
@@ -381,4 +381,9 @@ height:45px;
 position:relative;
 top:2px;
 left:2px;
+}
+img.wol{
+width:40px;
+display:block;
+margin:auto;
 }
