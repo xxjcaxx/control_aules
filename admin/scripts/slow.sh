@@ -22,7 +22,7 @@ iptables -t mangle -I BULKCONN -p tcp -m tcp --sport 80 -j MARK --set-mark 5  # 
 iptables -t mangle -I BULKCONN -p tcp -m tcp --sport 443 -j MARK --set-mark 5  # Tràfic web
 iptables -t mangle -I BULKCONN -p tcp -m tcp --sport 22 -j MARK --set-mark 8  # SSH
 iptables -t mangle -I BULKCONN -p tcp -m tcp --dport 22 -j MARK --set-mark 8  # SSH 
-iptables -t mangle -A BULKDIST -m hashlimit --hashlimit-above 30kb/s --hashlimit-burst ${b}mb --hashlimit-mode $mode --hashlimit-name bwlimit --hashlimit-htable-expire 20000 -j MARK --set-mark 7
+iptables -t mangle -A BULKDIST -m hashlimit --hashlimit-above 30kb/s --hashlimit-burst ${b}mb --hashlimit-mode $mode --hashlimit-name bwlimit --hashlimit-htable-expire 20000 ! -s 10.100.22.0/24 -j MARK --set-mark 7
 
 iptables -t mangle -A PREROUTING -i eth0 -j BULKCONN
 iptables -t mangle -A FORWARD -j BULKDIST

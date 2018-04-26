@@ -92,13 +92,9 @@ $(function(){
                 $("#ralentir").on("click",function(event){slow(tipo='r');});
                 $("#qos").on("click",function(event){slow(tipo='qos');});
                 $("#reset").on("click",function(event){reset();});
-    //            $("#capturartots").on("click",function(event){capturartots();});
-
-//		grafics = $(".line").peity("line",{'height':'50px','width':'200px'});
 		updaten();
                  
                 $('#net').on("click",function(event){grafiques();});
-                // http://benpickles.github.io/peity/#pie-charts
                  
                 // dades fonamentals
                 ipeth1=$("#ipeth1").text(); 
@@ -123,15 +119,12 @@ function f_pcs(){
 			else {
 			if(/^c192.168.[0-9]+.[0-9]{1,2}$/.test(ip)){$(this).addClass('desconeguts');}
 			var $block = $('<img title="Bloquear esta IP"  id="b'+ip+'" class="bloquea" alt="Bloquea esta IP" src="images/connected.png"/>');
-			
 
 			// Per mostrar els desconnectats mire en els IPtables actuals a vore si està la IP
 			if($("#actual").text().indexOf(ip.substring(1)) > 0 ){
 				$(this).addClass('off');
 			        $block.attr('src','images/disconnected.png');
 				}
-
-
 
 			$(this).append($block);
 			$block.on("click",function(event){ 
@@ -156,7 +149,6 @@ function f_pcs(){
                                 console.log('tortuga');
 				turtle('put');
 				}
-                        //else {console.log($('#actual').text())}
 }
 
 function f_mapa(){
@@ -175,7 +167,6 @@ function f_mapa(){
 	}
 
 }
-
 
 ///////////////////////// BLOQUEAR ///////////////////////////////////////
 
@@ -204,31 +195,27 @@ function slow(tipo){
 	var burst = $('#burst').val();
 	var mode = $('#banmode').val();
 	$.get('slow.php',{v:velocitat,s:streaming,l:burst,m:mode,tipo:tipo},function(data){}).done(function(){console.log('Lent'); refrescar(); });
-       // turtle('put');
 	}
-
 }
 
 function turtle(act){
-if(act=='put'){
-
-        $("#panel ul li").each(function(i){
-	$(this).prepend('<img class="turtle" src="images/turtle.png" title="Ralentizat" />');
-	});
-}
-if(act=='del'){
+	if(act=='put'){
+        	$("#panel ul li").each(function(i){
+			$(this).prepend('<img class="turtle" src="images/turtle.png" title="Ralentizat" />');
+		});
+	}	
+	if(act=='del'){
                  $('.turtle').each(function(i){$(this).remove();}); 
-}
+	}
 }
 
 function reset(){
         l();
 	$.get('reset.php',function(data){}).done(function(){console.log('Reset'); 
-                 $('.turtle').each(function(i){$(this).remove();}); 
+		 turtle('del');
                  refrescar();
            });
 }
-
 
 /////////////////////////////// GRAFIQUES /////////////////
 
@@ -239,6 +226,7 @@ function updaten() {
         $("#estadistiques_hui").html('<img src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
         $("#estadistiques_setmana").html('<img src="images/graph/control_aules/totalsemana.png?'+Math.random()+'"/>');
         refrescar();
+	capturarMapa();
 	//get_pcs("");
 }
 
@@ -296,20 +284,14 @@ function capturarTodos(t){
 }
 
 function capturarMapa(){
-//console.log('capturar');
 targets=""
 for(i=101;i<125;i++){
  if(clients[i]['on']==1) {
-//	console.log("capturant: "+i);
         targets=targets+" "+i;
-//	capturarSolo(i);
  }
 }
 console.log(targets);
-//capturarTodos(targets);
 $.get('observar.php');
-setTimeout(capturarMapa, 60000);
-f_mapa();
 }
 
 
@@ -345,33 +327,16 @@ function monitorQoS(){
                                 $("#actual").append('<span id="resipadv">Monitor QoS</span>');
                                 });
 
+//$('#panel').append('<div id="coles"></div>');
 }
 
 
 /*
 TODO:
 
-Wakeonlan
-
-ansible
-
 bloquear desde cliente
-
 
 Gràfics dels clients més actius
 
-Detectar el sistema operatiu del clients
-
-Capturar pantalles:
-export DISPLAY=:0
-export XAUTHORITY=/home/$(who | grep 'tty7' | cut -d" " -f1)/.Xauthority
-scrot captura.png
-ssh root@192.168.9.111 /root/captura.sh
-scp root@192.168.9.111:/home/captura.png ./admin/
-http://raspberrypi.stackexchange.com/questions/12838/capturing-screenshot-over-ssh
-ssh root@192.168.9.101 'bash -s' < captures.sh > /var/lib/control_aules/client1.png
-
-Obtindre una terminal:
-https://github.com/krishnasrinivas/wetty
 
 */

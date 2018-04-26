@@ -95,7 +95,8 @@ $alternateIP = exec ($command);
 				<img id="graphxarxa" src="images/graph/output.png"/>
 				<div style="clear:both;"></div>
 			</div>
-			<div id="panel"> </div>
+			<div id="panel"> 
+			</div>
 			<div id="estadistiques">
      				
 				<div id="estadistiques_hora"></div>
@@ -104,6 +105,7 @@ $alternateIP = exec ($command);
      				6 dies:
 				<div id="estadistiques_setmana"></div>
 			 </div>
+
 		</div>
 	</div>
 	<div id="actual"></div>

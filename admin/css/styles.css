@@ -106,6 +106,15 @@ background-color:#FFF;
 float:left;
 border:1px solid #e6e9ed;
 }
+#coles{
+
+width: 500px;
+padding:30px;
+background-color:#FFF;
+float:left;
+border:1px solid #e6e9ed;
+}
+
 
 .capturas{
 
@@ -383,7 +392,7 @@ top:2px;
 left:2px;
 }
 img.wol{
-width:40px;
+width:20px;
 display:block;
 margin:auto;
 }
