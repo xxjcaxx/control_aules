@@ -18,7 +18,7 @@ function obtener_datos(){
      return $.get('pcs.php',{opt:"solo_ips"},function(data){
            	array = data.split(';');
 		for(i=0;i<array.length;i++){
-			clients[array[i].split('.')[3]]['on']=1;
+			clients[array[i].split('.')[3]]['on']=1;        
 			clients[array[i].split('.')[3]]['ip']=array[i];
 		}
         });
@@ -232,7 +232,7 @@ function updaten() {
 
 function grafiques(){
 	if($("#graphxarxa").length == 0) { $("#net").append('<img id="graphxarxa" src="images/graph/output.png"/>'); $("#mostrarg").remove(); }
-	else { $("#graphxarxa").remove(); $("#net").append('<span id="mostrarg">V</span>'); }
+	else { $("#graphxarxa").remove(); $("#net").append('<span id="mostrarg">(Gràfics en Kbits/s)</span>'); }
 }
 
 function mostrar_acct($linea,ip){
