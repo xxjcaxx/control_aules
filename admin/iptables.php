@@ -10,10 +10,6 @@ system('sudo iptables -t nat -L -v');
 
 echo "\n---------------- IPtables-save ---------------\n";
 system('sudo iptables-save | grep -v ACCT'); //llevar els de comptabilitat
-
-echo "\n----------Wondershaper--------\n";
-system('sudo wondershaper eth2');
-
 ?>
 
 

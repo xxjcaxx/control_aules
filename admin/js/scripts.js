@@ -2,7 +2,7 @@
 
 clients={};
 for(i=1;i<255;i++){
-	clients[i]={'on':0};
+	clients[i]={'on':0, 'bloqued':0};
 }
 
 ipeth1=0; 
@@ -13,7 +13,7 @@ ipeth2=0;
 function obtener_datos(){
 	var array;
 	for(i=1;i<255;i++){
-	clients[i]={'on':0};
+	clients[i]={'on':0, 'bloqued':0};
 	}
      return $.get('pcs.php',{opt:"solo_ips"},function(data){
            	array = data.split(';');
@@ -24,15 +24,25 @@ function obtener_datos(){
         });
     
 }
+function obtener_bloqued(){
+     return $.get('pcs.php',{opt:"bloqued"},function(data){
+			array = data.split(' ');
+			if(array[0]!='') for(i=0;i<array.length;i++){
+				clients[array[i].split('.')[3]]['bloqued']=1;
+					}
+		});
+        
+    
+}
 
 function get_pcs(act){
-	$.when(obtener_datos()).done(function(x){
+	$.when(obtener_datos(),obtener_bloqued()).done(function(x){
 	$("#panel").html("<span>Llista de clients:</span>");
 	$("#panel").append('<div id="clients"></div>');
 	$("#clients").append('<ul id="ul_clients"></ul>');
 	for(i=1;i<255;i++){
 		if(clients[i]['on']==1){
-			$("#ul_clients").append('<li id="c'+clients[i]['ip']+'"><span>'+clients[i]['ip']+'</span>');
+			$("#ul_clients").append('<li id="c'+clients[i]['ip']+'" client="'+i+'"><span>'+clients[i]['ip']+'</span>');
 		}
 	}
 	$("#clients").append('<div><button type="button" id="act_clients">Actualitzar clients</button></div>');
@@ -69,15 +79,14 @@ function l(){ $("#panel").html('<img src="images/loading.gif"/>');}
 function refrescar(){
 		$.get('iptables.php',function(data){
 				$("#actual").html('<span id="resiptables">Resultat de IPtables:</span>');
-				$("#actual").append(data);
                                 $("#actual").append('<span id="resipadv">Monitor QoS</span>');
+				$("#actual").append(data);
 				}).done(function(){
-
 		                l();
 				get_pcs("");
                                 $("#actual pre").hide();
-                                $("#actual span#resipadv").hide();
-				$("#actual span#resiptables").on("click",function(event){$("#actual pre").toggle(400);$("#actual #resipadv").toggle(400);});
+                                //$("#actual span#resipadv").hide();
+				$("#actual span#resiptables").on("click",function(event){$("#actual pre").toggle(400);/*$("#actual #resipadv").toggle(400);*/});
 				});
 }
 // Mostrar coses de QoS
@@ -111,25 +120,17 @@ $(function(){
 function f_pcs(){
 	$("#panel ul li").each(function(i){
 			var ip=$(this).attr('id');
-			//console.log(ip);
-			if(/^c192.168.[0-9]+.25[0-4]/.test(ip)){
-			$(this).addClass('servers');
-			} 
-			else if(/^c192.168.[0-9]+.100$/.test(ip)){$(this).addClass('profe');}
-			else {
-			if(/^c192.168.[0-9]+.[0-9]{1,2}$/.test(ip)){$(this).addClass('desconeguts');}
+                        var client=$(this).attr('client');
+	
+          		if(client>250){	$(this).addClass('servers');} 
+			else if(client==100){$(this).addClass('profe');}
+			else { if(client<100){$(this).addClass('desconeguts');}
+
 			var $block = $('<img title="Bloquear esta IP"  id="b'+ip+'" class="bloquea" alt="Bloquea esta IP" src="images/connected.png"/>');
-
-			// Per mostrar els desconnectats mire en els IPtables actuals a vore si està la IP
-			if($("#actual").text().indexOf(ip.substring(1)) > 0 ){
-				$(this).addClass('off');
-			        $block.attr('src','images/disconnected.png');
-				}
-
+                        if(clients[client]['bloqued']==1){$(this).addClass('off'); $block.attr('src','images/disconnected.png');};
 			$(this).append($block);
 			$block.on("click",function(event){ 
                                 var scroll = $(window).scrollTop();
-
 				if(!$(this).parent().hasClass('off')){
 					bloquear(ip.substring(1));
 				} else {
@@ -284,13 +285,13 @@ function capturarTodos(t){
 }
 
 function capturarMapa(){
-targets=""
+targets="";
 for(i=101;i<125;i++){
  if(clients[i]['on']==1) {
         targets=targets+" "+i;
  }
 }
-console.log(targets);
+//console.log(targets);
 $.get('observar.php');
 }
 
@@ -322,9 +323,10 @@ n=id.substring(6);
 
 function monitorQoS(){
  $.get('monitorqos.php',function(data){
-                                $("#actual").html('<span id="resiptables">Resultat de IPtables:</span>');
+                                //$("#actual").html('<span id="resiptables">Resultat de IPtables:</span>');
+                                //$("#actual").append('<span id="resipadv">Monitor QoS</span>');
+                                $("#actual pre").remove();
                                 $("#actual").append(data);
-                                $("#actual").append('<span id="resipadv">Monitor QoS</span>');
                                 });
 
 //$('#panel').append('<div id="coles"></div>');
