@@ -7,7 +7,9 @@ margin:0px;
 
 h1 { 
 font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
-margin:10px 0 10px 0; padding-left:10px; color:#EDEDED;}
+margin:10px 0 10px 0; padding-left:10px; color:#EDEDED;
+font-size:24px;
+}
 
 #contenedor{
 display:flex;
@@ -230,6 +232,24 @@ margin:2px;
 padding: 0px 10px 0px 10px;
 }
 
+#pausar {
+margin-left:5px;
+color:#000;
+}
+#progress_actualizar{
+ -webkit-appearance: none;
+   appearance: none;
+   -moz-appearance: none;
+  width: 160px;
+  height: 14px;
+ border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+margin-left:5px;
+background:#eee;
+}
+#progress_actualizar::-moz-progress-bar{
+background-color:#2A3F54;
+}
  
 #derecha{
 flex:1 ;

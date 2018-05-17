@@ -9,6 +9,9 @@ ipeth1=0;
 xarxaeth1=0;
 ipeth0=0;
 ipeth2=0;
+percent_actualizar=0;
+intervalos=[];
+pause_actualizar=0;
 
 function obtener_datos(){
 	var array;
@@ -101,9 +104,10 @@ $(function(){
                 $("#ralentir").on("click",function(event){slow(tipo='r');});
                 $("#qos").on("click",function(event){slow(tipo='qos');});
                 $("#reset").on("click",function(event){reset();});
-		updaten();
+		updateall();
                  
                 $('#net').on("click",function(event){grafiques();});
+                $('#pausar').on("click",function(event){pausar();});
                  
                 // dades fonamentals
                 ipeth1=$("#ipeth1").text(); 
@@ -221,14 +225,36 @@ function reset(){
 /////////////////////////////// GRAFIQUES /////////////////
 
 function updaten() {
-	window.setTimeout(updaten, 60000);
 	$("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
         $("#estadistiques_hora").html('10 Minuts:</br> <img src="images/graph/control_aules/total5minuts.png?'+Math.random()+'"/></br> 2 hores: </br><img src="images/graph/control_aules/totalhora.png?'+Math.random()+'"/></br>');
         $("#estadistiques_hui").html('<img src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
         $("#estadistiques_setmana").html('<img src="images/graph/control_aules/totalsemana.png?'+Math.random()+'"/>');
         refrescar();
 	capturarMapa();
-	//get_pcs("");
+        percent_actualizar=0;
+}
+
+function updateall(){
+        updaten();
+	intervalos[0]=window.setInterval(updaten, 60000);
+        intervalos[1]=window.setInterval(function(){
+		percent_actualizar+=1; 
+		$('#progress_actualizar').val(percent_actualizar);
+	},600);
+}
+
+function pausar(){
+	if(pause_actualizar==0){
+		pause_actualizar=1;
+		window.clearInterval(intervalos[0])
+		window.clearInterval(intervalos[1])
+		$('#pausar').html('▶');
+	}
+	else {
+		pause_actualizar=0;
+		updateall();
+		$('#pausar').html('⏸');
+	}
 }
 
 function grafiques(){
@@ -276,7 +302,6 @@ function capturar(n){
 		});
 }
 
-
 function capturarSolo(n){
   $.get('capturar.php',{ip:n},function(data){}).done(function(){console.log(n)});
 }
@@ -301,35 +326,25 @@ $.get('observar.php');
 function apagar(id){
   n=id.substring(6);
   $.get('apagar.php',{ip:n},function(data){console.log(data);}).done(function(){
-});
+	});
 }
 function wol(id){
   n=id.substring(3);
   $.get('wol.php',{ip:n},function(data){console.log(data);}).done(function(){
-});
+	});
 }
-
 function notificar(id){
-
-n=id.substring(6);
-  $.get('notificar.php',{ip:n,mensaje:'hola mon'},function(data){console.log(data);}).done(function(){
-
-});
+	n=id.substring(6);
+  	$.get('notificar.php',{ip:n,mensaje:'hola mon'},function(data){console.log(data);}).done(function(){
+	});
 }
-
 
 /////////////////////////////////////////////MONITOR AVANÇAT ///////////////////////////////////////
-
-
 function monitorQoS(){
  $.get('monitorqos.php',function(data){
-                                //$("#actual").html('<span id="resiptables">Resultat de IPtables:</span>');
-                                //$("#actual").append('<span id="resipadv">Monitor QoS</span>');
                                 $("#actual pre").remove();
                                 $("#actual").append(data);
                                 });
-
-//$('#panel').append('<div id="coles"></div>');
 }
 
 

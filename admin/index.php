@@ -50,7 +50,7 @@ $alternateIP = exec ($command);
 			<h1 id="control">Control d'Aula</h1>
 			<span class="accio" id="btots">Bloquejar a tots</span>
 			<span class="accio" id="dtots">Desbloquejar a tots</span>
-			<span class="accio" id="ralentir">Velocitat molt lenta</span>
+			<span class="accio" id="ralentir">Velocitat molt lenta</span> 
 			<span class="acciof" id="qosf">QoS:</br>
 			<label>http\https:</label><input type="number" id="velocitat" value="1000"/>KB/s </br>
 			<label>Streaming:</label> <input type="number" id="streaming" value="60"/>KB/s </br>
@@ -74,6 +74,7 @@ $alternateIP = exec ($command);
 				<li>IP eth0: <span id="ipeth0"> <?php echo $externalIP; ?></span></li>
 				<li>IP eth2: <span id="ipeth2"> <?php echo $alternateIP; ?></span></li>
 			</ul>
+                        <span id="pausar">⏸</span><progress id="progress_actualizar" value="22" max="100">
 		</div>
 		<div id="derecha">
 			<div id="net">
