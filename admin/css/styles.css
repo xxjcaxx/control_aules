@@ -285,6 +285,86 @@ float:left;
 height:50px;
 }
 
+#seleccionar_clientes {
+float:left;
+}
+#ocultar_seleccionar {
+font-size: 10px;
+background-color: #2c2c2c;
+display: block;
+color: #eee;
+margin: 2px;
+padding: 0px 10px 0px 10px;
+width: 300px;
+cursor: pointer;
+}
+
+#seleccionar_clientes .input_container {
+  display: block;
+  width: 80px;
+  position: relative;
+  float:left;
+  padding-left: 15px;
+  margin-bottom: 1px;
+  cursor: pointer;
+  font-size: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+#seleccionar_clientes .input_container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+#seleccionar_clientes .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 10px;
+  width: 10px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+#seleccionar_clientes .input_container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+#seleccionar_clientes .input_container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+#seleccionar_clientes .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+#seleccionar_clientes .input_container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+#seleccionar_clientes .input_container .checkmark:after {
+  left: 2px;
+  top: 0px;
+  width: 2px;
+  height: 5px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 /*https://colorlib.com/polygon/gentelella/index.html
 http://www.ejeliot.com/samples/equal-height-columns/example-6.html
 */

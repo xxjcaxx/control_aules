@@ -2,8 +2,9 @@
 
 clients={};
 for(i=1;i<255;i++){
-	clients[i]={'on':0, 'bloqued':0};
+	clients[i]={'on':0, 'bloqued':0, 'select':0};
 }
+
 
 ipeth1=0; 
 xarxaeth1=0;
@@ -13,13 +14,15 @@ percent_actualizar=0;
 intervalos=[];
 pause_actualizar=0;
 
-function obtener_datos(){
+function obtener_datos(opciones){
 	var array;
 	for(i=1;i<255;i++){
-	clients[i]={'on':0, 'bloqued':0};
+	clients[i]={'on':0, 'bloqued':0, 'select':clients[i]['select']};
 	}
-     return $.get('pcs.php',{opt:"solo_ips"},function(data){
+
+     return $.get('pcs.php',{opt:opciones},function(data){
            	array = data.split(';');
+                console.log(array);
 		for(i=0;i<array.length;i++){
 			clients[array[i].split('.')[3]]['on']=1;        
 			clients[array[i].split('.')[3]]['ip']=array[i];
@@ -39,7 +42,7 @@ function obtener_bloqued(){
 }
 
 function get_pcs(act){
-	$.when(obtener_datos(),obtener_bloqued()).done(function(x){
+	$.when(obtener_datos(act),obtener_bloqued()).done(function(x){
 	$("#panel").html("<span>Llista de clients:</span>");
 	$("#panel").append('<div id="clients"></div>');
 	$("#clients").append('<ul id="ul_clients"></ul>');
@@ -48,7 +51,7 @@ function get_pcs(act){
 			$("#ul_clients").append('<li id="c'+clients[i]['ip']+'" client="'+i+'"><span>'+clients[i]['ip']+'</span>');
 		}
 	}
-	$("#clients").append('<div><button type="button" id="act_clients">Actualitzar clients</button></div>');
+	$("#clients").append('<div><button type="button" id="act_clients">Actualitzar clients amb nmap</button></div>');
 	f_pcs();
       	$.get('mapa.php',function(data){
 		$("#panel").append(data);
@@ -74,23 +77,28 @@ $(document).on("click","#totes",function(event){
 				}).done(function(){                             
 					}); 
 		});
+
+
+
+
 // El gif de loading
 function l(){ $("#panel").html('<img src="images/loading.gif"/>');}
 
 
 // Refrescar IPtables i Llista de clients
 function refrescar(){
-		$.get('iptables.php',function(data){
+				$.get('iptables.php',function(data){
 				$("#actual").html('<span id="resiptables">Resultat de IPtables:</span>');
                                 $("#actual").append('<span id="resipadv">Monitor QoS</span>');
 				$("#actual").append(data);
 				}).done(function(){
 		                l();
-				get_pcs("");
+				get_pcs("solo_ips");
                                 $("#actual pre").hide();
                                 //$("#actual span#resipadv").hide();
 				$("#actual span#resiptables").on("click",function(event){$("#actual pre").toggle(400);/*$("#actual #resipadv").toggle(400);*/});
 				});
+				
 }
 // Mostrar coses de QoS
 $(document).on("click","#actual span#resipadv",function(event){ console.log('QoS'); monitorQoS();});
@@ -116,7 +124,7 @@ $(function(){
                 ipeth2=$("#ipeth2").text();
                
 		capturarMapa();
-		
+	        $('#seleccionar_clientes').hide();	
 		});
 
 
@@ -146,6 +154,7 @@ function f_pcs(){
                         // les estadistiques per client
 			$(this).on("click", function(event){
 				mostrar_acct($(this),ip.substring(1));
+
 			});
 	});
 
@@ -224,11 +233,25 @@ function reset(){
 
 /////////////////////////////// GRAFIQUES /////////////////
 
+//Seleccionar clientes
+$(document).on("click","#ocultar_seleccionar",function(event){ $('#seleccionar_clientes').toggle('600'); });
+
+$(document).on("click","label.input_container",function(event){
+	if( $(event.target).is("input") ) {
+		//console.log($(event.target).attr('value'));
+		clients[$(event.target).attr('value')]['select']=1;
+		//console.log(clients);
+	}
+
+});
+
+
 function updaten() {
 	$("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
         $("#estadistiques_hora").html('10 Minuts:</br> <img src="images/graph/control_aules/total5minuts.png?'+Math.random()+'"/></br> 2 hores: </br><img src="images/graph/control_aules/totalhora.png?'+Math.random()+'"/></br>');
         $("#estadistiques_hui").html('<img src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
         $("#estadistiques_setmana").html('<img src="images/graph/control_aules/totalsemana.png?'+Math.random()+'"/>');
+        $("#estadistiques_setmana").append('<img src="images/graph/control_aules/totalsemanamedia.png?'+Math.random()+'"/>');
         refrescar();
 	capturarMapa();
         percent_actualizar=0;
@@ -273,7 +296,7 @@ function mostrar_acct($linea,ip){
                 	$linea.after('<a class="acaptura" id="image'+n[3]+'" href="images/graph/control_aules/captura'+n[3]+'.jpg" target="_blank"><span class="capturar" id="capturar'+n[3]+'"></span></a>');
 		//	$linea.after('<input type="text" name="proces" id="proces'+n[3]+'" value="Proces"></input>');
                		 capturar(n[3]);
-		});
+		}).done(function(){console.log(ip);});
                 $linea.find('img.bloquea').after('<img src="images/apagar.svg" id="apagar'+n[3]+'" class="apaga" />');
                 $linea.find('img.bloquea').after('<img src="images/alert.png" id="notifi'+n[3]+'" class="notifica" />');
                 $('#apagar'+n[3]).on('click',function(event){
