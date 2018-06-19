@@ -2,6 +2,12 @@
 PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games'
 xarxa=$(ifconfig | grep -o '192.168.[0-9]*.254' | cut -d'.' -f1-3)
 
+if [[ $(cat /tmp/ips_seleccionades | wc -l) -gt 0 ]]
+then
+	cp /tmp/ips_seleccionades /tmp/ips
+ 
+else 
+
 if [[ $1 == 'nmap' ]]  ### Se li pot passar nmap per a que busque de forma més exausitva
 then
 
@@ -17,5 +23,7 @@ else ### Tan sols busca els clients que han tingut algo de tràfic en l'ultim pe
 
 	diff /tmp/clients_out.tmp /tmp/clients_out_last.tmp | grep -o '192.168.[0-9]*\.[0-9]*' | sort | uniq > /tmp/ips
         echo -e "$xarxa.251\n$xarxa.252\n$xarxa.254" >> /tmp/ips
+
+fi
 
 fi

@@ -119,7 +119,7 @@ $(function(){
                  
                 // dades fonamentals
                 ipeth1=$("#ipeth1").text(); 
-		rxaeth1=ipeth1.split(".")[0]+"."+ipeth1.split(".")[1]+"."+ipeth1.split(".")[2];
+		xarxaeth1=ipeth1.split(".")[0]+"."+ipeth1.split(".")[1]+"."+ipeth1.split(".")[2];
                 ipeth0=$("#ipeth0").text();
                 ipeth2=$("#ipeth2").text();
                
@@ -238,9 +238,17 @@ $(document).on("click","#ocultar_seleccionar",function(event){ $('#seleccionar_c
 
 $(document).on("click","label.input_container",function(event){
 	if( $(event.target).is("input") ) {
-		//console.log($(event.target).attr('value'));
-		clients[$(event.target).attr('value')]['select']=1;
+		//console.log($(event.target).prop('checked'));
+		if ($(event.target).prop('checked')){ clients[$(event.target).attr('value')]['select']=1;}
+		else { clients[$(event.target).attr('value')]['select']=0;}
 		//console.log(clients);
+                seleccionats=[]
+		for(i=1;i<255;i++){
+			if(clients[i]['select']==1){seleccionats.push(xarxaeth1+"."+i)}
+		}
+	        //console.log(seleccionats);	
+
+		$.post( "seleccionar_clients.php", { 'llista_clients[]': seleccionats } );
 	}
 
 });
