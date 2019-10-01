@@ -1,6 +1,6 @@
 #set terminal png size 800,225 enhanced font "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf,8"
 set terminal png size 800,225 enhanced font "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf,8"
-set output '/tmp/output.png'
+set output '/var/lib/control_aules/output.png'
 set xdata time
 set timefmt "%H:%M:%S"
 
