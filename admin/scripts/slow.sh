@@ -24,6 +24,7 @@ iptables -t mangle -I BULKCONN -p tcp -m tcp --sport 443 -j MARK --set-mark 5  #
 iptables -t mangle -I BULKCONN -p tcp -m tcp --sport 22 -j MARK --set-mark 8  # SSH
 iptables -t mangle -I BULKCONN -p tcp -m tcp --dport 22 -j MARK --set-mark 8  # SSH 
 iptables -t mangle -A BULKDIST -m hashlimit --hashlimit-above 3kb/s --hashlimit-burst ${b}mb --hashlimit-mode $mode --hashlimit-name bwlimit --hashlimit-htable-expire 20000 ! -s 10.100.22.0/24 -j MARK --set-mark 7
+iptables -t mangle -A BULKDIST -s 10.100.22.0/24 -j MARK --set-mark 9
 ### Tot el que passa per buldisk i va a més de 3KBytes/s, té una descàrrega continuada de $b (10mb) i no vinga de la xarxa 10.100.22.0/24 es considera streaming. 
 ### Pot tindre dos modes: 
 #### dstip: Fes distinció per IP de destí. Això evita detectar la suma de tots els clients. 
@@ -51,6 +52,9 @@ tc class add dev eth1 parent 1:1 classid 1:12 htb rate ${s}kbps ceil ${s}kbps   
 #tc class add dev eth1 parent 1:1 classid 1:13 htb rate 80kbps ceil 100kbps    # Clients banejats a ma
 tc class add dev eth1 parent 1:1 classid 1:14 htb rate 150kbps ceil 200kbps   # Per defecte
 
+
+tc class add dev eth1 parent 1: classid 1:2 htb rate 10000kbps ceil 10000kbps   # 1000kb = 8000Kbits
+
 #### La class pare 1:1 té ja un límit de el que diga $v que sol ser de 1000KB, és a dir 1MByte de descàrrega per a tota la classe. És com tindre una connexió de 8Mb en casa. 
 #### Les pàgines web i ssh tenen la cua 1:10 amb la mateixa limitació que la classe sencera. 
 #### Si es detecta un streaming, el client (dstip) o el streaming (dstip,srcip) van a la cua de streaming que pot ser de 60KB = 480Kb com a molt per a tots els que estiguen.
@@ -60,6 +64,7 @@ echo "Afegint filtre"
 tc filter add dev eth1 parent 1: prio 1 protocol ip handle 5 fw flowid 1:10 # port 80 i 443
 tc filter add dev eth1 parent 1: prio 4 protocol ip handle 8 fw flowid 1:11 # ssh
 tc filter add dev eth1 parent 1: prio 3 protocol ip handle 7 fw flowid 1:12 ###### hashslimit streaming #########
+tc filter add dev eth1 parent 1: prio 3 protocol ip handle 9 fw flowid 1:2 ###### descarregues LAN #########
 #tc filter add dev eth1 parent 1: prio 2 protocol ip handle 6 fw flowid 1:13 # Banejats a ma
 
 echo "Afegint politiques a les cues"

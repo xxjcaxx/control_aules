@@ -14,6 +14,10 @@ percent_actualizar=0;
 intervalos=[];
 pause_actualizar=0;
 
+
+/*
+Aquesta funcio recorre tots els PCS que estan actius i obté la informacio
+*/
 function obtener_datos(opciones){
 	var array;
 	for(i=1;i<255;i++){
@@ -30,6 +34,11 @@ function obtener_datos(opciones){
         });
     
 }
+
+/*
+Aquesta funció recorre els pcs que estan bloquejats per marcar bloqued en l'array
+*/
+
 function obtener_bloqued(){
      return $.get('pcs.php',{opt:"bloqued"},function(data){
 			array = data.split(' ');
@@ -41,6 +50,9 @@ function obtener_bloqued(){
     
 }
 
+/*
+Funció que crida a les altres funcions per generar la llista de clients
+*/
 function get_pcs(act){
 	$.when(obtener_datos(act),obtener_bloqued()).done(function(x){
 	$("#panel").html("<span>Llista de clients:</span>");
@@ -53,7 +65,7 @@ function get_pcs(act){
 	}
 	$("#clients").append('<div><button type="button" id="act_clients">Actualitzar clients amb nmap</button></div>');
 	f_pcs();
-      	$.get('mapa.php',function(data){
+      	$.get('adm_clients.php',{order:"mapa"},function(data){
 		$("#panel").append(data);
 	}).done(function(){f_mapa();});
 
@@ -87,8 +99,8 @@ function l(){ $("#panel").html('<img src="images/loading.gif"/>');}
 
 // Refrescar IPtables i Llista de clients
 function refrescar(){
-				$.get('iptables.php',function(data){
-				$("#actual").html('<span id="resiptables">Resultat de IPtables:</span>');
+				$.get('adm_clients.php',{order:'iptables'},function(data){
+				$("#actual").html('<span id="resiptas">Resultat de IPtables:</span>');
                                 $("#actual").append('<span id="resipadv">Monitor QoS</span>');
 				$("#actual").append(data);
 				}).done(function(){
@@ -186,13 +198,13 @@ function f_mapa(){
 
 function bloquear(ip){
         l();        
-	$.get('bloquear.php',{ip:ip},function(data){}).done(function(){
+	$.get('adm_clients.php',{order:'bloquear',ip:ip},function(data){}).done(function(){
         refrescar();
 	 }); 
 	} 
 function desbloquear(ip){
 	l();
-        $.get('bloquear.php',{ipd:ip},function(data){}).done(function(){
+        $.get('adm_clients.php',{order:'bloquear',ipd:ip},function(data){}).done(function(){
         refrescar();
 	 });
 	} 
@@ -208,7 +220,7 @@ function slow(tipo){
 	var streaming = $('#streaming').val();
 	var burst = $('#burst').val();
 	var mode = $('#banmode').val();
-	$.get('slow.php',{v:velocitat,s:streaming,l:burst,m:mode,tipo:tipo},function(data){}).done(function(){console.log('Lent'); refrescar(); });
+	$.get('adm_clients.php',{order:'slow',v:velocitat,s:streaming,l:burst,m:mode,tipo:tipo},function(data){}).done(function(){console.log('Lent'); refrescar(); });
 	}
 }
 
@@ -225,7 +237,7 @@ function turtle(act){
 
 function reset(){
         l();
-	$.get('reset.php',function(data){}).done(function(){console.log('Reset'); 
+	$.get('adm_clients.php',{order:'reset'},function(data){}).done(function(){console.log('Reset'); 
 		 turtle('del');
                  refrescar();
            });
@@ -328,16 +340,16 @@ function mostrar_acct($linea,ip){
 ///////////////////////////////////////////////////CAPTURES////////////////////////
 
 function capturar(n){
-  $.get('capturar.php',{ip:n},function(data){}).done(function(){
+  $.get('adm_clients.php',{order:'capturar',ip:n},function(data){}).done(function(){
                 $("#capturar"+n).append('<img src="images/graph/control_aules/captura'+n+'.jpg" />');
 		});
 }
 
 function capturarSolo(n){
-  $.get('capturar.php',{ip:n},function(data){}).done(function(){console.log(n)});
+  $.get('adm_clients.php',{order:'capturar',ip:n},function(data){}).done(function(){console.log(n)});
 }
 function capturarTodos(t){
-  $.get('capturar.php',{targets:t},function(data){}).done(function(){console.log(t)});
+  $.get('adm_clients.php',{order:'capturar',targets:t},function(data){}).done(function(){console.log(t)});
 }
 
 function capturarMapa(){
@@ -348,7 +360,7 @@ for(i=101;i<125;i++){
  }
 }
 //console.log(targets);
-$.get('observar.php');
+$.get('adm_clients.php',{order:'capturar'});
 }
 
 
@@ -356,23 +368,23 @@ $.get('observar.php');
 ////////////////////////////////////////////////////////////ADMINSTRACIO//////////////////////////////
 function apagar(id){
   n=id.substring(6);
-  $.get('apagar.php',{ip:n},function(data){console.log(data);}).done(function(){
+  $.get('adm_clients.php',{order:'apagar',ip:n},function(data){console.log(data);}).done(function(){
 	});
 }
 function wol(id){
   n=id.substring(3);
-  $.get('wol.php',{ip:n},function(data){console.log(data);}).done(function(){
+  $.get('adm_clients.php',{order:'wol',ip:n},function(data){console.log(data);}).done(function(){
 	});
 }
 function notificar(id){
 	n=id.substring(6);
-  	$.get('notificar.php',{ip:n,mensaje:'hola mon'},function(data){console.log(data);}).done(function(){
+  	$.get('adm_clients.php',{order:'notificar',ip:n,mensaje:'hola mon'},function(data){console.log(data);}).done(function(){
 	});
 }
 
 /////////////////////////////////////////////MONITOR AVANÇAT ///////////////////////////////////////
 function monitorQoS(){
- $.get('monitorqos.php',function(data){
+ $.get('adm_clients.php',{order:'monitorqos'},function(data){
                                 $("#actual pre").remove();
                                 $("#actual").append(data);
                                 });
@@ -382,9 +394,12 @@ function monitorQoS(){
 /*
 TODO:
 
-bloquear desde cliente
 
 Gràfics dels clients més actius
 
+Fitxers de configuració i adaptació a nous tipus de xarxes.
 
+Reorganitzar la configuració i els fitxers temporals
+
+Administració centralitzada del centre.
 */
