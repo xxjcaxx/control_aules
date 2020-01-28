@@ -26,8 +26,8 @@ if(!file_exists ('/tmp/ips' )){
 /****** Obtindre llista de IPs *******/
 
 if(isset($_GET['opt'])) {
-   if($_GET['opt'] == 'solo_ips'){
-$handle = fopen("/tmp/ips", "r");
+   if($_GET['opt'] == 'solo_ips'){  
+$handle = fopen("/tmp/ips", "r");  /* Necessitem en /etc/systemd/system/multi-user.target.wants/apache2.service el PrivateTmp=false*/
 $separador = '';
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
