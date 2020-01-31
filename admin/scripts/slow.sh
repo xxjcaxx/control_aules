@@ -6,6 +6,8 @@ t=$3    # Tipus de QoS
 b=$4    # Burst
 m=$5    # Mode
 
+# Exemple d'us: ./slow.sh 1000 60 qos 10 ban
+
 [[ $t == "r" ]] && v=$s
 [[ $m == "ban" ]] && mode='dstip'
 [[ $m == "streaming" ]] && mode='dstip,srcip'

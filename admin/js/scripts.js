@@ -63,10 +63,11 @@ function get_pcs(act){
 			$("#ul_clients").append('<li id="c'+clients[i]['ip']+'" client="'+i+'"><span>'+clients[i]['ip']+'</span>');
 		}
 	}
-	$("#clients").append('<div><button type="button" id="act_clients">Actualitzar clients amb nmap</button></div>');
+	$("#clients").append('<div id="boto_actualitzar"><button type="button" id="act_clients">Actualitzar clients amb nmap</button></div>');
 	f_pcs();
-      	$.get('adm_clients.php',{order:"mapa"},function(data){
-		$("#panel").append(data);
+    $.get('adm_clients.php',{order:"mapa"},function(data){
+	$("#panel").append(data);
+	//$("#clients").append('<div id="info_clients" class="info"><p>Els clients verds són coneguts, els negres servidors i els grisos desconeguts.</p></div>');
 	}).done(function(){f_mapa();});
 
 	});
@@ -114,7 +115,7 @@ function refrescar(){
 }
 // Mostrar coses de QoS
 $(document).on("click","#actual span#resipadv",function(event){ console.log('QoS'); monitorQoS();});
-
+$(document).on("click","#actual span#resiptas",function(event){ console.log('QoS'); monitorIPtables();});
 // Inici del document on carrega tots els divs
 $(function(){
                 l(); //refrescar();
@@ -267,7 +268,7 @@ $(document).on("click","label.input_container",function(event){
 
 
 function updaten() {
-	$("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
+	    $("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
         $("#estadistiques_hora").html('10 Minuts:</br> <img src="images/graph/control_aules/total5minuts.png?'+Math.random()+'"/></br> 2 hores: </br><img src="images/graph/control_aules/totalhora.png?'+Math.random()+'"/></br>');
         $("#estadistiques_hui").html('<img src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
         $("#estadistiques_setmana").html('<img src="images/graph/control_aules/totalsemana.png?'+Math.random()+'"/>');
@@ -301,8 +302,14 @@ function pausar(){
 }
 
 function grafiques(){
-	if($("#graphxarxa").length == 0) { $("#net").append('<img id="graphxarxa" src="images/graph/output.png"/>'); $("#mostrarg").remove(); }
-	else { $("#graphxarxa").remove(); $("#net").append('<span id="mostrarg">(Gràfics en Kbits/s)</span>'); }
+	if($("#graphxarxa").length == 0) { 
+		$("#div_graphxarxa").append('<img id="graphxarxa" src="images/graph/output.png"/>'); 
+		$("#mostrarg").remove(); 
+	}
+	else { 
+		$("#graphxarxa").remove(); 
+		$("#div_graphxarxa").append('<span id="mostrarg">(Gràfics en Kbits/s)</span>'); 
+	}
 }
 
 function mostrar_acct($linea,ip){
@@ -390,6 +397,13 @@ function monitorQoS(){
                                 });
 }
 
+function monitorIPtables(){
+	$.get('adm_clients.php',{order:'iptables'},function(data){
+								   $("#actual pre").remove();
+								   $("#actual").append(data);
+								   });
+   }
+   
 
 /*
 TODO:

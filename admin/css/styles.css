@@ -11,19 +11,163 @@ margin:10px 0 10px 0; padding-left:10px; color:#EDEDED;
 font-size:24px;
 }
 
+div.info {
+border: none !important;
+color: #333;
+font-size: 9px;
+padding: 0 10px 0 10px;
+}
+div.info p {
+  max-width: 300px;
+}
+
+/* El contenedor general */
+
 #contenedor{
 display:flex;
 overflow:hidden;
 }
 
-#panel{
-padding:30px;
-background-color:#FFF;
-float:left;
-border:1px solid #e6e9ed;
+
+/* Menu d'accions lateral */
+
+#accions{
+  padding:0px;
+  background-color: #2A3F54;
+  border:1px solid #e6e9ed;
+  margin-bottom:-1000px;
+  padding-bottom:1000px;
+  }
+
+
+  #velocitat, #streaming, #banmode, #burst{
+    font-size:10px;
+    width: 110px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      -webkit-appearance: none;
+     -moz-appearance: textfield;
+      appearance: textfield;
+    }
+    #accions span.accio {
+    background-color: #2A3F54;
+    display:block;
+    color:#eee;
+    padding: 3px 10px 3px 10px;
+    font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+    font-size:12px;
+    border-bottom:1px solid #2A2F34;
+    border-top:1px solid #2A3F54;
+    cursor: pointer;
+    } 
+    #accions span.acciof{
+    background-color: #2A3F54;
+    display:block;
+    color:#eee;
+    padding: 0px 10px 0px 10px;
+    font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+    font-size:11px;
+    border-bottom:1px solid #2A3F54;
+    border-top:1px solid #2A3F54;
+    }
+    #accions span label{
+    width: 65px;
+    display: block;
+    float: left;
+    } 
+    #accions span.accio:hover{
+    border-bottom:1px solid #1F2F3F;
+    border-top:1px solid #536271;
+    }
+    #accions span.accio a{
+    color:#eee;
+    font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+    font-size:12px;
+    }
+    
+    
+    #accions ul{
+    /*width: 500px;*/
+    padding:0px;
+    }
+    
+    
+    #accions ul li{
+    /*background-color: #1ABC9C;*/
+    display:block;
+    /*border-radius: 5px;*/
+    color:#eee;
+    font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+    font-size:12px;
+    margin:2px;
+    padding: 0px 10px 0px 10px;
+    }
+    
+    #pausar {
+    margin-left:5px;
+    color:#000;
+    }
+    #progress_actualizar{
+     -webkit-appearance: none;
+       appearance: none;
+       -moz-appearance: none;
+      width: 160px;
+      height: 14px;
+     border-radius: 2px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+    margin-left:5px;
+    background:#eee;
+    }
+    #progress_actualizar::-moz-progress-bar{
+    background-color:#2A3F54;
+    }
+     
+/* Contingut a la dreta.  */
+
+#derecha{
+  padding:1px;
 }
 
-#panel>span{
+#derecha>div>div {
+  border:1px solid #e6e9ed;
+}
+#derecha div {
+  background-color:#FFF;
+}
+
+
+/* Bloc superior amb estadístiques de la xarxa */
+
+#net {
+margin-bottom:0px;
+padding:10px;
+/* width:100%; */
+/*flex: 1; */
+display: flex;
+}
+#net #div_graphxarxa {
+  border: none;
+}
+
+
+/* Contingut principal amb el paner de clients i estadistiques*/
+
+#contingut {
+  display:flex;
+  flex-wrap: wrap;
+  
+}
+
+/* Panel amb tots els clients*/
+
+#panel{
+padding:30px;
+/*float:left;*/
+flex: 1; 
+}
+
+#panel>span{  /*Els titols*/
 font-size:24px;
 color:#73879c;
 font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
@@ -31,16 +175,7 @@ display:block;
 border-bottom:2px solid #e6e9ed;
 }
 
-
-#estadistiques {
-font-size:10px;
-color:#73879c;
-font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
-display:block;
-border-bottom:2px solid #e6e9ed;
-}
-
-#clients {
+#clients {  /* La llista de les IPS */
 /*width: 550px;*/
 }
 
@@ -49,13 +184,9 @@ width: 500px;
 padding:0px;
 }
 
-#clients button{
-}
-
 #clients ul li{
 background-color: #1ABC9C;
 display:block;
-/*border-radius: 5px;*/
 margin:2px;
 padding: 0px 10px 0px 10px;
 }
@@ -100,190 +231,53 @@ width: 200px;
 height: auto;
 }
 
-#estadistiques{
-
+#boto_actualitzar {
 width: 500px;
-padding:30px;
-background-color:#FFF;
-float:left;
-border:1px solid #e6e9ed;
-}
-#coles{
-
-width: 500px;
-padding:30px;
-background-color:#FFF;
-float:left;
-border:1px solid #e6e9ed;
 }
 
-
-.capturas{
-
-
-padding:5px;
-background-color:#FFF;
-float:left;
-border:1px solid #e6e9ed;
+.mapa_fila {
+width: 510px;
+height: 63px;
 }
-
-.capturas img{
-width: 235px;
-height: auto;
-display:block;
-} 
-
-
-#actual{
-font-size:8px;
-clear:both;
-padding:10px;
-background-color:#F7F7F7;
-border:1px solid #e6e9ed;
-}
-
-
-#actual span{
-font-size:10px;
-background-color: #2c2c2c;
-display:block;
-color:#eee;
-margin:2px;
-padding: 0px 10px 0px 10px;
-width: 300px;
-
-cursor: pointer;
-
-}
-
-
-#accions{
-padding:0px;
-background-color: #2A3F54;
-float:left;
-border:1px solid #e6e9ed;
-margin-bottom:-1000px;
-padding-bottom:1000px;
-width:225px;
-}
-
-
-#velocitat, #streaming, #banmode, #burst{
-font-size:10px;
-width: 110px;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  -webkit-appearance: none;
- -moz-appearance: textfield;
-  appearance: textfield;
-}
-#accions span.accio {
-background-color: #2A3F54;
-display:block;
-color:#eee;
-padding: 3px 10px 3px 10px;
-font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
-font-size:12px;
-border-bottom:1px solid #2A2F34;
-border-top:1px solid #2A3F54;
-cursor: pointer;
-} 
-#accions span.acciof{
-background-color: #2A3F54;
-display:block;
-color:#eee;
-padding: 0px 10px 0px 10px;
-font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
-font-size:11px;
-border-bottom:1px solid #2A3F54;
-border-top:1px solid #2A3F54;
-}
-#accions span label{
-width: 65px;
-display: block;
+.mapa_pc {
+background-image:url("../images/pc.png");
+background-size: 115px 65px;
+ background-repeat: no-repeat;
+height: 63px;
+width:16.5%;
 float: left;
-} 
-#accions span.accio:hover{
-border-bottom:1px solid #1F2F3F;
-border-top:1px solid #536271;
-}
-#accions span.accio a{
-color:#eee;
-font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
-font-size:12px;
 }
 
-
-#accions ul{
-/*width: 500px;*/
-padding:0px;
+#mapa div.mapa_pc div.pantalla{
+background-color:#444;
+width:74px;
+height:45px;
+position:relative;
+top:2px;
+left:2px;
 }
 
-
-#accions ul li{
-/*background-color: #1ABC9C;*/
+img.wol{
+width:20px;
 display:block;
-/*border-radius: 5px;*/
-color:#eee;
-font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
-font-size:12px;
-margin:2px;
-padding: 0px 10px 0px 10px;
+margin:auto;
 }
 
-#pausar {
-margin-left:5px;
-color:#000;
-}
-#progress_actualizar{
- -webkit-appearance: none;
-   appearance: none;
-   -moz-appearance: none;
-  width: 160px;
-  height: 14px;
- border-radius: 2px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
-margin-left:5px;
-background:#eee;
-}
-#progress_actualizar::-moz-progress-bar{
-background-color:#2A3F54;
-}
- 
-#derecha{
-flex:1 ;
-padding:1px;
-}
-#net {
+
+/*  Les gràfiques al costat dels clients  */
+
+#estadistiques{
+padding:30px;
 background-color:#FFF;
-border:1px solid #e6e9ed;
-margin-bottom:0px;
-padding:10px;
-}
-#net div.nic{
+flex: 1; 
 font-size:10px;
+color:#73879c;
+font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
 display:block;
-float:left;
-height:50px;
+border-bottom:2px solid #e6e9ed;
 }
 
-#net span.nic{
-display:block;
-float:left;
-height:50px;
-}
 
-svg.peity{
-margin:0 10px 0 10px;
-}
-
-#net span.max {
-margin-left:5px;
-display:block;
-float:left;
-height:50px;
-}
 
 #seleccionar_clientes {
 float:left;
@@ -370,7 +364,34 @@ http://www.ejeliot.com/samples/equal-height-columns/example-6.html
 */
 
 
+/* Informació de l'estat actual del sistema en cru */ 
+
+
+#actual{
+  font-size:8px;
+  clear:both;
+  padding:10px;
+  background-color:#F7F7F7;
+  border:1px solid #e6e9ed;
+  }
+  
+  
+  #actual span{
+  font-size:10px;
+  background-color: #2c2c2c;
+  display:block;
+  color:#eee;
+  margin:2px;
+  padding: 0px 10px 0px 10px;
+  width: 300px;
+  cursor: pointer;
+  }
+
+
+
+
  /* Bordered form */
+ /* Per als formularis i millorar el buttons*/
 form {
     border: 3px solid #f1f1f1;
 }
@@ -470,29 +491,5 @@ input:checked + .slider:before {
   transform: translateX(31px);
 }
 
-.mapa_fila {
-width: 100%;
-height: 63px;
-}
-.mapa_pc {
-background-image:url("../images/pc.png");
-background-size: 115px 65px;
- background-repeat: no-repeat;
-height: 63px;
-width:16.5%;
-float: left;
-}
 
-.pantalla{
-background-color:#444;
-width:74px;
-height:45px;
-position:relative;
-top:2px;
-left:2px;
-}
-img.wol{
-width:20px;
-display:block;
-margin:auto;
-}
+

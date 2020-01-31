@@ -1,10 +1,10 @@
 #!/bin/bash
 
 export LANG=C
+# Multipliquem per 8 per tindre en KBites
+sar -n DEV | grep "eth0" | grep -v "Average" | tr -s " " | cut -d" " -f1,5,6 | awk '{$1=$1; $2=$2*8; $3=$3*8; print }' | grep -v '^0[01234567]' | grep -v '^2[23]' > /tmp/eth0.tmp
+sar -n DEV | grep "eth1" | grep -v "Average" | tr -s " " | cut -d" " -f1,5,6 | awk '{$1=$1; $2=$2*8; $3=$3*8; print }' | grep -v '^0[01234567]' | grep -v '^2[23]' > /tmp/eth1.tmp
 
-sar -n DEV | grep "eth2" | grep -v "Average" | tr -s " " | cut -d" " -f1,5,6 | awk '{$1=$1; $2=$2*8; $3=$3*8; print }' > /tmp/eth2.tmp
-sar -n DEV | grep "eth0" | grep -v "Average" | tr -s " " | cut -d" " -f1,5,6 | awk '{$1=$1; $2=$2*8; $3=$3*8; print }' > /tmp/eth0.tmp
-sar -n DEV | grep "eth1" | grep -v "Average" | tr -s " " | cut -d" " -f1,5,6 | awk '{$1=$1; $2=$2*8; $3=$3*8; print }' > /tmp/eth1.tmp
 
 ##Mitjanes (sols eixida eth1)
 
