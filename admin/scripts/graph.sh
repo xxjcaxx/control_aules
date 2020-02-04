@@ -35,4 +35,8 @@ done < /tmp/eth1.tmp
 ## Fin de mitjanes
 
 
-gnuplot < /var/www/html/admin/plot.plot  
+### Traure la mitjana per tallar valors extrems i veure millor el consum normal
+mitjana=$(echo $(cat /tmp/eth1.tmp | awk '{$3=$3*8; print}' | cut -d" " -f3 | paste -sd"+" | bc)'/'$(cat /tmp/eth1.tmp | wc -l) | bc)
+
+
+gnuplot -c /var/www/html/admin/plot.plot $mitjana

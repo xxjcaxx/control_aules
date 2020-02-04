@@ -13,6 +13,7 @@ ipeth2=0;
 percent_actualizar=0;
 intervalos=[];
 pause_actualizar=0;
+grafics_tots=0; // Si se mostren o no el grafics de tots o sols els actius
 
 
 /*
@@ -268,15 +269,33 @@ $(document).on("click","label.input_container",function(event){
 
 
 function updaten() {
-	    $("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
-        $("#estadistiques_hora").html('10 Minuts:</br> <img src="images/graph/control_aules/total5minuts.png?'+Math.random()+'"/></br> 2 hores: </br><img src="images/graph/control_aules/totalhora.png?'+Math.random()+'"/></br>');
-        $("#estadistiques_hui").html('<img src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
-        $("#estadistiques_setmana").html('<img src="images/graph/control_aules/totalsemana.png?'+Math.random()+'"/>');
-        $("#estadistiques_setmana").append('<img src="images/graph/control_aules/totalsemanamedia.png?'+Math.random()+'"/>');
+	$("#graphxarxa").attr('src', $("#graphxarxa").attr('src')+'?'+Math.random());
+        $("#estadistiques_hora").html('10 Minuts:</br> <img id="img10minuts" src="images/graph/control_aules/total5minuts.png?'+Math.random()+'"/></br> 2 hores: </br><img id="img2hores"  src="images/graph/control_aules/totalhora.png?'+Math.random()+'"/></br>');
+        $("#estadistiques_hui").html('<img id="imghui"  src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
+        $("#estadistiques_setmana").html('<img id="imgsetmana"  src="images/graph/control_aules/totalsemana.png?'+Math.random()+'"/>');
+        $("#estadistiques_setmana").append('<img id="imgsetmanamitjana"  src="images/graph/control_aules/totalsemanamedia.png?'+Math.random()+'"/>');
         refrescar();
 	capturarMapa();
         percent_actualizar=0;
 }
+
+$(document).on("click","#img10minuts",function(event){
+	if(grafics_tots) {
+		 grafics_tots=0;
+		 $("#img10minuts").attr("src",'images/graph/control_aules/total5minutstots.png?'+Math.random());
+		 $("#img2hores").attr("src",'images/graph/control_aules/totalhoratots.png?'+Math.random());
+		 $("#imghui").attr("src",'images/graph/control_aules/totaltots.png?'+Math.random());
+		 $("#imgsetmana").attr("src",'images/graph/control_aules/totalsemanatots.png?'+Math.random());
+		 $("#imgsetmanamitjana").attr("src",'images/graph/control_aules/totalsemanamediatots.png?'+Math.random());
+	}
+	else{
+		grafics_tots=1;
+		$("#estadistiques_hora").html('10 Minuts:</br> <img id="img10minuts" src="images/graph/control_aules/total5minuts.png?'+Math.random()+'"/></br> 2 hores: </br><img id="img2hores"  src="images/graph/control_aules/totalhora.png?'+Math.random()+'"/></br>');
+		$("#estadistiques_hui").html('<img id="imghui"  src="images/graph/control_aules/total.png?'+Math.random()+'"/>');
+		$("#estadistiques_setmana").html('<img id="imgsetmana"  src="images/graph/control_aules/totalsemana.png?'+Math.random()+'"/>');
+		$("#estadistiques_setmana").append('<img id="imgsetmanamitjana"  src="images/graph/control_aules/totalsemanamedia.png?'+Math.random()+'"/>');
+	}
+});
 
 function updateall(){
         updaten();
@@ -305,9 +324,12 @@ function grafiques(){
 	if($("#graphxarxa").length == 0) { 
 		$("#div_graphxarxa").append('<img id="graphxarxa" src="images/graph/output.png"/>'); 
 		$("#mostrarg").remove(); 
+		$("#info_graphxarxa").show();
+		console.log("mostrar");
 	}
 	else { 
 		$("#graphxarxa").remove(); 
+		$("#info_graphxarxa").hide();
 		$("#div_graphxarxa").append('<span id="mostrarg">(Gràfics en Kbits/s)</span>'); 
 	}
 }

@@ -94,16 +94,16 @@ $externalIP = exec ($command);
 				</div>
 
 				<div id="estadistiques">
-					<span id="ocultar_seleccionar">Seleccionar Clients</span>
-					<div id="seleccionar_clientes">
-						<?php
+				<!--	<span id="ocultar_seleccionar">Seleccionar Clients</span> -->
+				<!--	<div id="seleccionar_clientes"> -->
+						<?php /*
 						$nums = explode(".", $localIP) ;
 						$prefix = $nums[0]. "." .$nums[1]. "." .$nums[2] ; 
 						for($i=1;$i<250;$i++){
 						echo "<label class='input_container'>".$prefix.".".$i."<input id='seleccionar_clients_".$prefix.".".$i."' type='checkbox' value='".$i."'><span class='checkmark'></span></label>";
-						}
+						} */
 						?>
-					</div>	
+				<!--	</div>	-->
 					<div id="estadistiques_hora"></div>
 						6 Hores:
 					<div id="estadistiques_hui"></div>
