@@ -81,7 +81,7 @@ if(isset($_GET['targets'])){
 $prefijo=exec("ifconfig | egrep -o '192.168.[0-9]+'");
            
 echo $_GET['targets'];
-$res = exec('for i in '.$_GET['targets'].'; do sudo ssh -o "ConnectTimeout=10" -o "StrictHostKeyChecking no" root@'.$prefijo.'.$i \'bash -s\' < ./scripts/captures.sh > /var/lib/control_aules/captura$i.jpg; echo "Capturant: $i '.$_GET['targets'].'"; done' );
+$res = exec('for i in '.$_GET['targets'].'; do sudo ssh -o "UserKnownHostsFile=/dev/null" -o "ConnectTimeout=10" -o "StrictHostKeyChecking no" root@'.$prefijo.'.$i \'bash -s\' < ./scripts/captures.sh > /var/lib/control_aules/captura$i.jpg; echo "Capturant: $i '.$_GET['targets'].'"; done' );
            echo $res;
            
 	}
