@@ -177,7 +177,7 @@ if(isset($_GET['ip'])){
 } // de notificar
 
 
-
+////// Si hi ha una sessió de navegador oberta, observa durant 5 minuts
 if($_GET['order'] == 'observar'){
 $res = exec('echo -n 5 > /var/lib/control_aules/observant');
 } // de observar
